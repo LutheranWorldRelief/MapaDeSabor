@@ -1,0 +1,9 @@
+<% if @place_links.size > 0 %>
+<ul>
+<% @place_links.each do |place| %>
+	<li><a href="/dashboard/<%= place.slug %>"><%= place.name %></a></li>
+<% end %>
+</ul>
+<% else %>
+<span style="color: red">No se ha encontrado</span>
+<% end %>

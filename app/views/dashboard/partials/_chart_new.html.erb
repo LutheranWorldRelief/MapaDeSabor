@@ -1,0 +1,150 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<h5><b><%= t("dashboard.index.partials.chart.title") %></b></h5>
+<%= image_tag "/uni.png", width: "150px", class: "img-fluid" %>
+<div style="position: relative;">
+  <div style="left: 45%; right: 45%; top: -10%; width: 100%; position: relative;">FRUITY-BROWNED</div>
+  <div style="top: 45%; bottom: 45%; left: 0; position: absolute;">COCOA</div>
+  <div style="width: 80%; margin: 0 auto;">
+  <div id="container" style=""></div>
+  </div>
+  <div style="top: 45%; bottom: 45%; right: 0; position: absolute;">ACIDITY</div>
+  <div style="left: 50%; right: 45%; bottom: -10%; position: relative;">SPICY</div>
+</div>
+<div class="col-md-6">
+  <p style="font-size: 9px; font-style: italic; color: #808080;">Partial Least Squares regression (PLS, software: LatentiX 2.12, latentix.com) using sensory data as X-matrix and sensory data as Y-matrix. All values were autoscaled. (PC#1 (22.774%); PC#2 (18.896%). Petersen M. A., Seguine E. S., Papalexandratou Z., Sukha D., De Winne T., Jakobsen R. R., Nielsen D. S., 2017.</p>
+</div>
+<style>
+  body{
+    overflow-x: hidden;
+  }
+</style>
+<script>
+<% if @flavors.size > 0 %>
+   chart = Highcharts.chart('container', {
+    title: {
+      text: ''
+    },
+    subtitle: {
+      text: ''
+    },
+    xAxis: {
+      title: {
+        enabled: false,
+        text: 'Height (cm)'
+      },
+      visible: true,
+      max: 100,
+      min: -100,
+      gridLineColor: '#ffffff',
+      lineColor: '#ffffff',
+      lineWidth: 1,
+      tickColor: '#ffffff',
+      labels: {
+        enabled: false,
+      },
+      plotLines: [{
+        color: '#cccccc',
+        dashStyle: 'dot',
+        width: 2,
+        value: 0,
+        zIndex: 3
+      }]
+    },
+    yAxis: {
+      title: {
+        enabled: false,
+        text: 'Weight (kg)'
+      },
+      visible: true,
+      max: 100,
+      min: -100,
+      gridLineColor: '#ffffff',
+      labels: {
+        enabled: false,
+      },
+      plotLines: [{
+        color: '#cccccc',
+        dashStyle: 'dot',
+        width: 2,
+        value: 0,
+        zIndex: 3
+      }]
+    },
+    plotOptions: {
+      scatter: {
+        marker: {
+          radius: 5,
+          lineWidth: 1,
+          symbol: 'circle'
+        }
+      },
+      bubble: {
+        minSize: 50,
+        maxSize: 200,
+        dataLabels: {
+          enabled: true,
+          format: '{point.name}',
+          color: '{point.color}',
+          className: 'circleText'
+        }
+      }
+    },
+    series: [
+    {
+      showInLegend: false,
+      type: 'bubble',
+      data: [
+        <% @flavors.each do |fl| %>  
+        { x: <%= fl.position_x %>, y: <%= fl.position_y %>, z: <%= fl.position_z %>, name: '<%= fl.name%>', color: '<%= "##{fl.color}" %>'},
+        <% end %>
+      ],
+      enableMouseTracking: false
+    },
+    
+    // {
+    //   name: '<%#= fl.name %>',
+    //   type: '<%#= fl.flavor_type %>',
+    //   data: [<%# fl.flavor_items.order(order: :asc).each do |fi| %>[<%#= fi.position_x %>, <%#= fi.position_y %>],<%# end %>],
+    //   color: Highcharts.Color(Highcharts.getOptions().colors[<%#= fl.color %>]).setOpacity(0.3).get(),
+    //   enableMouseTracking: false
+
+    // },
+    <%# end %>
+    {
+      showInLegend: false,
+      name: 'Productos',
+      type: 'scatter',
+      data: <%= "#{@points.to_json}".html_safe %>
+
+    }],
+    tooltip: {
+      useHTML: true,
+      formatter: function() {
+        return '<a href="/dashboard/' + this.point.slug + '"><b>' + this.point.myData + '</b></a>';
+      },
+      style: {
+        pointerEvents: 'auto'
+      }
+    },
+    exporting: {
+      enabled: false
+    }
+  });
+    
+  // chart.renderer.circle(pixelX, pixelY, pixelR).attr({
+  //   fill: '#FCFFC5',
+  //   transform: 'rotate(20,100,100),scale(2,1)',
+  //     'stroke-width': 1
+  // }).add();
+
+<% end %>
+</script>
+<style>
+  .circleText.highcharts-data-label text tspan{
+    font-weight: bold;
+    font-size: 12px;
+    opacity: 0.4;
+  }
+</style>

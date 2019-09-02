@@ -1,0 +1,73 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<h5><b>Gu&iacute;a del sabor</b></h5>
+<div style="position: relative;">
+  <div style="left: 45%; right: 45%; top: -10%; width: 100%; position: relative;">FRUITY-BROWNED</div>
+  <div style="top: 45%; bottom: 45%; left: 0; position: absolute;">COCOA</div>
+  <div style="width: 80%; margin: 0 auto;">
+    <canvas id="myChart"></canvas>
+  </div>
+  <div style="top: 45%; bottom: 45%; right: 0; position: absolute;">ACIDITY</div>
+  <div style="left: 45%; right: 45%; bottom: -10%; position: relative;">SPICY</div>
+</div>
+<script>
+
+	var zones        = [{ x: 14, y: 15}, { x: 1, y: 17}, { x: -5, y: -10}] //Circulos (Zonas) predefinidas
+  var zone_colors  = ['#fff1dd', '#fff1dd', '#fff1dd']
+  var zone_sizes   = [85, 85, 85] //Tamaño de los circulos
+  var data         = zones.concat(<%= "#{@points.to_json}".html_safe %>)
+  var data_colors  = zone_colors.concat(<%= "#{@point_colors.to_json}".html_safe %>)
+  var data_sizes   = zone_sizes.concat(<%= Array.new(@points.size, 9) %>)
+
+  var ctx = document.getElementById("myChart");
+  var scatterChart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      labels: <%= "#{@point_labels}".html_safe %>,
+      datasets: [{
+          label: '',
+          borderColor: data_colors,
+          backgroundColor: data_colors,
+          data: data,
+          pointBackgroundColor: data_colors,
+          pointRadius: data_sizes,
+          pointHoverRadius: data_sizes,
+
+      }]
+    },
+    options: {
+       legend: false,
+       tooltips: {
+       callbacks: {
+          label: function(tooltipItem, data) {
+             var label = data.labels[tooltipItem.index];
+             return label;
+          }
+        }
+      },
+       scales: {
+          xAxes: [{
+            ticks: {
+              display: true,
+              suggestedMin: -30,
+              suggestedMax: 30,
+              stepSize: 5
+            },
+          }],
+          yAxes: [{
+            ticks: {
+              display: true,
+              suggestedMin: -30,
+              suggestedMax: 30,
+              stepSize: 5
+            },
+          }]
+       }
+    }
+  })
+</script>
+<style>
+  body{
+    overflow-x: hidden;
+  }
+</style>

@@ -1,0 +1,35 @@
+.top-bar-left
+  %ul.dropdown.menu.menu-profile.bg-white
+    / PROFILE
+    %li.bg-white.user-icon-profile
+      %i.intial.palette-Indigo-700.bg.ti-user.rounder
+    %li.bg-white
+      %a.bg-white.text-gray{"data-toggle" => "profile-dropdown"}
+        Hola, #{current_user.full_name}
+      #profile-dropdown.dropdown-pane.dropdown-pane-nest.profile-nest.bottom{"data-auto-focus" => "true", "data-dropdown" => ""}
+        %ul.menu.vertical.dropdown.profile-dropdown
+          %li
+            = link_to edit_panel_profile_url(current_user) do
+              %i.ti-user.palette-Indigo-500.bg
+              Perfil
+              %span.text-aqua.fontello-record
+          -# %li
+          -#   %a{:href => "#"}
+          -#     %i.ti-wallet.palette-Blue-700.bg
+          -#     Accounts
+          %li
+            = link_to destroy_user_session_url, method: :delete do
+              %i.ti-power-off.palette-Light-Blue-900.bg>
+              Salir
+    %li.bg-white.show-for-small-only
+      = link_to destroy_user_session_url, method: :delete do
+        %i.intial.palette-Red-700.bg.ti-power-off.rounder
+        Salir
+    / end of PROFILE
+.top-bar-right
+  %ul.dropdown.menu.bg-white.hide-for-small-only
+
+    %li
+      = link_to destroy_user_session_url, method: :delete do
+        %i.intial.palette-Red-700.bg.ti-power-off.rounder
+        Salir

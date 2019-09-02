@@ -1,0 +1,90 @@
+<header class="headin">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3 h-s1" >
+        <div class="h-log">
+          <a href="/" style="text-decoration: none; color: #333">
+            <img src="<%= asset_path('/image-5.png')%>" alt="LWR" width="25px" height="25px"> <span class="title-hidden"><%= t('layout.partials.header.title') %></span>
+          </a>
+        </div>
+      </div>
+      <div class="col-9 h-s2">
+        <div class="menu-li">
+          <%if request.path == root_path%>
+          <a href="javascript:void(0)" id="ac-menu" title="Filtros"><i class="fas fa-angle-left fa-2x" style=""></i></a>
+          <%end%>
+        </div>
+        <!--
+        <div class="searching">
+          <form action="">
+            <input type="text" class="searchin-control" placeholder="search...">
+          </form>
+        </div> -->
+        <div class="float-right">
+          <div class="h-mini">
+            <ul>
+              <li><a href="/"><%= t('layout.partials.header.links.home') %></a></li>
+              <li><a href="/about_us"><%= t('layout.partials.header.links.about_us') %></a></li>
+              <li><a href="/contacts/new"><%= t('layout.partials.header.links.contact') %></a></li>
+              <li>
+                <div class="btn-group dropleft">
+                  <a class="dropdown-toggle" href="#" role="button" id="language_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <%= t(I18n.locale) %>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="language_menu">
+                    <% I18n.available_locales.each do |lang| %>
+                      <%= link_to t(lang), "#{request.path}?locale=#{lang.to_s}", method: :get , class: "dropdown-item link_lang" %>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<style>
+  a.link_lang{
+    color: #333 !important;
+    text-align: center;
+  }
+  a.link_lang:hover{
+    background-color: #c7c780 !important;
+  }
+  .h-mini ul{
+    list-style: none;
+  }
+  .h-mini ul li{
+    float: left;
+  }
+  .h-mini ul li a{
+    text-decoration: none;
+    display: block;
+    padding: 0 15px;
+    color: #fff;
+  }
+  .h-mini ul li a:hover{
+    color: #dedede;
+  }
+  #ac-menu i{
+    transform: rotateZ(0deg);
+    transition: 0.4s all ease;
+  }
+  @media (max-width: 768px){
+    #ac-menu i{
+      transform: rotateZ(180deg);
+    }
+  }
+</style>
+<script>
+  $("#ac-menu").click(function(){
+    var transform = $("#ac-menu i.fa-angle-left").css("transform")
+    if(transform == "matrix(1, 0, 0, 1, 0, 0)"){
+      $("#ac-menu i.fa-angle-left").css("transform", "rotateZ(180deg)")
+    }else{
+      $("#ac-menu i.fa-angle-left").css("transform", "rotateZ(0deg)")
+    }
+  })
+</script>

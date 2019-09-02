@@ -1,0 +1,88 @@
+input[type="radio"] + label span {
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  height: 29px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  width: 29px;
+}
+
+.breadcrumb {
+
+  font-size: .9em;
+  padding: 1.5em 1em 0;
+
+  .container {
+    max-width: 900px;
+  }
+
+  a {
+    color: $gray;
+    margin: .5em 0;
+  }
+}
+
+.title-bar {
+  background: none;
+  padding: .9rem;
+}
+
+.dropdown.menu {
+
+  a {
+    padding: .7rem .5rem;
+  }
+
+}
+
+.header-menu {
+  color: $white;
+  display: table;
+
+  li {
+    border-right: 0;
+    display: table-cell;
+    max-width: 100px;
+    padding: 0 5px;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: normal;
+
+    a {
+      border-bottom: 3px solid $white;
+      color: $white;
+      font-family: 'Roboto';
+      padding: .7rem 0;
+    }
+
+    a:hover {
+      background: none;
+    }
+  }
+
+  li:hover,
+  .active-option {
+    background: $white;
+
+    a {
+      color: $header-titles;
+    }
+  }
+}
+
+.white-button {
+  background: $white;
+  color: $header-titles;
+}
+
+.white-button:hover {
+  background: $white-hover;
+  color: $header-titles;
+}
+
+.hollow-white-button {
+  background: none;
+  border: 1px solid $white;
+  color: $white;
+}

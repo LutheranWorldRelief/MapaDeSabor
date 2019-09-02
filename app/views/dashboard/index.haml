@@ -1,0 +1,438 @@
+// TO DO QUITAR EXCESO <BR>
+= javascript_include_tag 'pages'
+:javascript
+  var zones        = [{ x: 14, y: 15}, { x: 1, y: 17}, { x: -5, y: -10}] //Circulos (Zonas) predefinidas
+  var zone_colors  = ['#fff1dd', '#fff1dd', '#fff1dd']
+  var zone_sizes   = [85, 85, 85] //Tamaño de los circulos
+  var data         = zones.concat(#{@points.to_json})
+  var data_colors  = zone_colors.concat(#{@point_colors.to_json})
+  var data_sizes   = zone_sizes.concat(#{Array.new(@points.size, 9)})
+
+
+  window.onload = function() {
+    var ctx = document.getElementById("myChart");
+    var scatterChart = new Chart(ctx, {
+      type: 'scatter',
+      data: {
+        labels: #{@point_labels},
+        datasets: [{
+            label: '',
+            borderColor: data_colors,
+            backgroundColor: data_colors,
+            data: data,
+            pointBackgroundColor: data_colors,
+            pointRadius: data_sizes,
+            pointHoverRadius: data_sizes,
+
+        }]
+      },
+      options: {
+         legend: false,
+         tooltips: {
+         callbacks: {
+            label: function(tooltipItem, data) {
+               var label = data.labels[tooltipItem.index];
+               return label;
+            }
+          }
+        },
+         scales: {
+            xAxes: [{
+              ticks: {
+                display: true,
+                suggestedMin: -30,
+                suggestedMax: 30,
+                stepSize: 5
+              },
+            }],
+            yAxes: [{
+              ticks: {
+                display: true,
+                suggestedMin: -30,
+                suggestedMax: 30,
+                stepSize: 5
+              },
+            }]
+         }
+      }
+    })
+  };
+%br
+
+
+
+
+
+  .row.relative-div
+
+
+    .columns.collapsed.medium-4.small-10{id: "tabs-cols"}
+      // MENU LATERAL
+      -#
+        .accordion
+        %h3
+          = image_tag("site/accordion-country.png")
+          Países
+        .container-accordion
+          .row
+            - unless @countries.blank?
+              - @countries.each_with_index do |country, i|
+                .small-12.columns
+                  .product{id: "country-#{country.id}"}
+                    = country.name
+
+              - @countries.each_with_index do |country, i|
+                %br
+                .small-12.columns
+                  - products = Place.where(producer_id: country.producers.map(&:id))
+                  .country-products{id: "country-products-#{country.id}", style: "display: none;" }
+                    - if products && products.size > 0
+                      %br
+                      .row
+                        - products.each do |product|
+                          .products-results{id:"product-#{product.id}", lat:"#{product.latitude}", long:"#{product.longitude}", product:"#{product.id}", pname:"#{product.name}", pdescription:"#{product.description}" }
+                            .small-6.columns
+                              .location-result
+                                = image_tag("site/location-tiny.png", class:"location-icon")
+                                - unless product.main_image.blank?
+                                  = image_tag(product.main_image.url)
+                                - else
+                                  = image_tag("https://via.placeholder.com/300x200")
+                :javascript
+                  $("#country-#{country.id}").click(function(e){
+                    $(".product").removeClass("active-product");
+                    $(this).addClass("active-product");
+                    $(".country-products").hide();
+                    $("#country-products-#{country.id}").show();
+                    $(".map-container").html("");
+                    $(".map-container").html('<div id="thismap" style= "height: 350px; width: 100%;"></div>');
+                    mymap = L.map('thismap').setView([13.901288, -89.224453], 5);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                    var markers = new L.MarkerClusterGroup();
+                    $("#country-products-#{country.id} .products-results").each(function(i){
+                      var latitude = $(this).attr("lat");
+                      var longitude = $(this).attr("long");
+                      var product = $(this).attr("product");
+                      var name = $(this).attr("pname");
+                      var description = $(this).attr("pdescription");
+                      markers.addLayer(L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>'));
+                    });
+                    mymap.addLayer(markers);
+                    popup = L.popup();
+                  });
+
+                  $(".products-results").click(function(){
+                    $(".map-container").html("");
+                    $(".map-container").html('<div id="thismap" style= "height: 350px; width: 100%;"></div>');
+
+                    var latitude = $(this).attr("lat");
+                    var longitude = $(this).attr("long");
+                    var product = $(this).attr("product");
+                    var name = $(this).attr("pname");
+                    var description = $(this).attr("pdescription");
+
+                    mymap = L.map('thismap').setView([latitude, longitude], 5);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                    L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>').addTo(mymap);
+                    popup = L.popup();
+
+                  });
+
+            -# form_tag(search_url, :method => :get, remote: true, :multipart => true) do
+              .row
+                .small-8.columns
+                  = select_tag "countries", options_for_select(@countries.map{ |s| [s.name, s.id] }), :prompt => 'Seleccionar un país', class: "chosen-select"
+                .small-4.columns
+                  = submit_tag "Buscar", class: "button tiny"
+
+        %h3
+          = image_tag("site/accordion-producer.png")
+          Productores
+        .container-accordion
+
+          .row
+            - unless @producers.blank?
+              - @producers.each_with_index do |producer, i|
+                .small-12.columns
+                  .product{id: "producer-#{producer.id}"}
+                    = producer.name
+
+              - @producers.each_with_index do |producer, i|
+                %br
+                .small-12.columns
+                  - products = Place.where(producer_id: producer.id)
+                  .producer-products{id: "producer-products-#{producer.id}", style: "display: none;" }
+                    - if products && products.size > 0
+                      %br
+                      .row
+                        - products.each do |product|
+                          .p-products-results{id:"product-#{product.id}", lat:"#{product.latitude}", long:"#{product.longitude}", product:"#{product.id}", pname:"#{product.name}", pdescription:"#{product.description}" }
+                            .small-6.columns
+                              .location-result
+                                = image_tag("site/location-tiny.png", class:"location-icon")
+                                - unless product.main_image.blank?
+                                  = image_tag(product.main_image.url)
+                                - else
+                                  = image_tag("https://via.placeholder.com/300x200")
+                :javascript
+                  $("#producer-#{producer.id}").click(function(e){
+                    $(".producer-products").hide();
+                    $("#producer-products-#{producer.id}").show();
+                    $(".map-container").html("");
+                    $(".map-container").html('<div id="thismap" style= "height: 350px; width: 100%;"></div>');
+                    mymap = L.map('thismap').setView([13.901288, -89.224453], 5);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                    var markers = new L.MarkerClusterGroup();
+                    $("#producer-products-#{producer.id} .p-products-results").each(function(i){
+                      var latitude = $(this).attr("lat");
+                      var longitude = $(this).attr("long");
+                      var product = $(this).attr("product");
+                      var name = $(this).attr("pname");
+                      var description = $(this).attr("pdescription");
+                      markers.addLayer(L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>'));
+                    });
+                    mymap.addLayer(markers);
+                    popup = L.popup();
+                  });
+
+                  $(".p-products-results").click(function(){
+                    $(".map-container").html("");
+                    $(".map-container").html('<div id="thismap" style= "height: 350px; width: 100%;"></div>');
+
+                    var latitude = $(this).attr("lat");
+                    var longitude = $(this).attr("long");
+                    var product = $(this).attr("product");
+                    var name = $(this).attr("pname");
+                    var description = $(this).attr("pdescription");
+
+                    mymap = L.map('thismap').setView([latitude, longitude], 5);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                    L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>').addTo(mymap);
+                    popup = L.popup();
+
+                  });
+
+        %h3
+          = image_tag("site/accordion-product.png")
+          Productos
+        .container-accordion
+          //FILTROS DE CHART
+
+    .inner-wrap
+
+      / Right sidemenu
+      #skin-select
+        / Toggle sidemenu icon button
+        %a#toggle
+        / End of Toggle sidemenu icon button
+        .skin-part
+          #tree-wrap
+            / Profile
+            .profile
+
+
+
+            .slimScrollDiv
+              .side-bar
+
+                .accordion
+                  %h3
+                    = image_tag("site/accordion-country.png")
+                    Países
+                  .container-accordion
+                    .row
+                      - unless @countries.blank?
+                        - @countries.each_with_index do |country, i|
+                          .small-12.columns
+                            .product{id: "country-#{country.id}"}
+                              = country.name
+
+
+                            %br
+                            .small-12.columns
+                              - products = Place.where(producer_id: country.producers.map(&:id))
+                              .country-products{id: "country-products-#{country.id}", style: "display: none;" }
+                                - if products && products.size > 0
+                                  %br
+                                  .row
+                                    - products.each do |product|
+                                      .products-results{id:"product-#{product.id}", lat:"#{product.latitude}", long:"#{product.longitude}", product:"#{product.id}", pname:"#{product.name}", pdescription:"#{product.description}" }
+                                        .small-6.columns
+                                          .location-result
+                                            = image_tag("site/location-tiny.png", class:"location-icon")
+                                            - unless product.main_image.blank?
+                                              = image_tag(product.main_image.url)
+                                            - else
+                                              = image_tag("https://via.placeholder.com/300x200")
+                          :javascript
+                            $("#country-#{country.id}").click(function(e){
+                              $(".product").removeClass("active-product");
+                              $(this).addClass("active-product");
+                              $(".country-products").hide();
+                              $("#country-products-#{country.id}").show();
+                              $(".map-container").html("");
+                              $(".map-container").html('<div id="thismap" style= "height: 350px; width: 100%;"></div>');
+                              mymap = L.map('thismap').setView([13.901288, -89.224453], 5);
+                              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                              var markers = new L.MarkerClusterGroup();
+                              $("#country-products-#{country.id} .products-results").each(function(i){
+                                var latitude = $(this).attr("lat");
+                                var longitude = $(this).attr("long");
+                                var product = $(this).attr("product");
+                                var name = $(this).attr("pname");
+                                var description = $(this).attr("pdescription");
+                                markers.addLayer(L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>'));
+                              });
+                              mymap.addLayer(markers);
+                              popup = L.popup();
+                            });
+
+                            $(".products-results").click(function(){
+                              $(".map-container").html("");
+                              $(".map-container").html('<div id="thismap" style= "height: 350px; width: 100%;"></div>');
+
+                              var latitude = $(this).attr("lat");
+                              var longitude = $(this).attr("long");
+                              var product = $(this).attr("product");
+                              var name = $(this).attr("pname");
+                              var description = $(this).attr("pdescription");
+
+                              mymap = L.map('thismap').setView([latitude, longitude], 5);
+                              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                              L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>').addTo(mymap);
+                              popup = L.popup();
+
+                            });
+
+                      -# form_tag(search_url, :method => :get, remote: true, :multipart => true) do
+                        .row
+                          .small-8.columns
+                            = select_tag "countries", options_for_select(@countries.map{ |s| [s.name, s.id] }), :prompt => 'Seleccionar un país', class: "chosen-select"
+                          .small-4.columns
+                            = submit_tag "Buscar", class: "button tiny"
+
+                  %h3
+                    = image_tag("site/accordion-producer.png")
+                    Productores
+                  .container-accordion
+
+                    .row
+                      - unless @producers.blank?
+                        - @producers.each_with_index do |producer, i|
+                          .small-12.columns
+                            .product{id: "producer-#{producer.id}"}
+                              = producer.name
+
+
+                            %br
+                            .small-12.columns
+                              - products = Place.where(producer_id: producer.id)
+                              .producer-products{id: "producer-products-#{producer.id}", style: "display: none;" }
+                                - if products && products.size > 0
+                                  %br
+                                  .row
+                                    - products.each do |product|
+                                      .p-products-results{id:"product-#{product.id}", lat:"#{product.latitude}", long:"#{product.longitude}", product:"#{product.id}", pname:"#{product.name}", pdescription:"#{product.description}" }
+                                        .small-6.columns
+                                          .location-result
+                                            = image_tag("site/location-tiny.png", class:"location-icon")
+                                            - unless product.main_image.blank?
+                                              = image_tag(product.main_image.url)
+                                            - else
+                                              = image_tag("https://via.placeholder.com/300x200")
+                          :javascript
+                            $("#producer-#{producer.id}").click(function(e){
+                              $(".producer-products").hide();
+                              $("#producer-products-#{producer.id}").show();
+                              $(".map-container").html("");
+                              $(".map-container").html('<div id="thismap" style= "height: 350px; width: 100%;"></div>');
+                              mymap = L.map('thismap').setView([13.901288, -89.224453], 5);
+                              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                              var markers = new L.MarkerClusterGroup();
+                              $("#producer-products-#{producer.id} .p-products-results").each(function(i){
+                                var latitude = $(this).attr("lat");
+                                var longitude = $(this).attr("long");
+                                var product = $(this).attr("product");
+                                var name = $(this).attr("pname");
+                                var description = $(this).attr("pdescription");
+                                markers.addLayer(L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>'));
+                              });
+                              mymap.addLayer(markers);
+                              popup = L.popup();
+                            });
+
+                            $(".p-products-results").click(function(){
+                              $(".map-container").html("");
+                              $(".map-container").html('<div id="thismap" style= "height: 350px; width: 100%;"></div>');
+
+                              var latitude = $(this).attr("lat");
+                              var longitude = $(this).attr("long");
+                              var product = $(this).attr("product");
+                              var name = $(this).attr("pname");
+                              var description = $(this).attr("pdescription");
+
+                              mymap = L.map('thismap').setView([latitude, longitude], 5);
+                              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                              L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>').addTo(mymap);
+                              popup = L.popup();
+
+                            });
+
+
+    = render partial: "dashboard/partials/form_filter"
+    .columns.medium-12.small-12{id: "map-leaflet"}
+      %h2
+        MAPA
+      .map-wrapper
+        .map-container
+          /#map.map{ data: { lat: 13.720621, lng: -89.227687, zoom: 3 }}
+          #thismap{style: "height: 350px;"}
+            - if @places && @places.size > 0
+              - @places.each do |place|
+                .places-results{style: "display: none;", lat:"#{place.latitude}", long:"#{place.longitude}", place:"#{place.id}", pname:"#{place.name}", pdescription:"#{place.description}" }
+
+          :javascript
+            mymap = L.map('thismap').setView([13.701288, -89.224453], 3)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap)
+            var markers = new L.MarkerClusterGroup();
+
+            $(".places-results").each(function(i){
+              var latitude = $(this).attr("lat");
+              var longitude = $(this).attr("long");
+              var product = $(this).attr("place");
+              var name = $(this).attr("pname");
+              var description = $(this).attr("pdescription");
+              markers.addLayer(L.marker([latitude, longitude]).bindPopup('<a href="/products/'+product+'"><b>'+name+'</b></a><br />'+description+'<br><a href="/products/'+product+'">Ver detalle</a>'));
+            });
+            mymap.addLayer(markers);
+            popup = L.popup();
+
+.row
+  .columns.small-12
+
+    %br
+    %h2 GUÍA DEL SABOR
+    %br
+    %br
+    .chart-wrapper
+      // TO DO quitar absolutes
+      .fruity-browned-title
+        FRUITY-BROWNED
+      .cocoa-title
+        COCOA
+      .canvas-wrapper
+        %canvas#myChart
+      .acidity-title
+        ACIDITY
+      .spicy-title
+        SPICY
+    .clearfix
+    %br
+    %br
+    %br
+:javascript
+  $("#country_country_id").change(function(){
+    if($(this).val() != ""){
+      alert($(this).text());
+    }
+  });

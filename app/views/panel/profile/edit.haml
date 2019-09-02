@@ -1,0 +1,25 @@
+%br
+.row
+  .small-12.medium-12.large-12
+    .callout.secondary
+      .row
+        .medium-12.columns
+          %h4= model.model_name.human
+
+      .row
+        = simple_nested_form_for @user, url: panel_profile_path(@user.id), method: :put do |f|
+          .row
+            .medium-6.columns
+              = f.input :name, required: true
+            .medium-6.columns
+              = f.input :lastname
+
+          .row
+            .medium-6.columns
+              = f.input :password
+          .row
+            .medium-6.columns
+              = f.input :confirm_password
+
+          .text-center
+            = f.button :submit

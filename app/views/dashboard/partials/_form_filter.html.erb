@@ -1,0 +1,50 @@
+<%= simple_form_for :filter, url: "#", method: :get do |f| %>
+<div class="row">
+	<div class="card">
+		<div class="card-section">
+			<div class="columns small-4">
+				<input id="filter_box_fermentation" type="checkbox" style="display: none" name="filter[box_fermentation]" <%= @bx_fer == true ? "checked" : ""%>><label style="padding: 0 5px;" for="filter_box_fermentation"><div class="circle-for" style="background: #08486e"></div> Box Fermentation</label>
+			</div>
+			<div class="columns small-4">
+				<input id="filter_tray_fermentation" type="checkbox" style="display: none" name="filter[tray_fermentation]" <%= @tr_fer == true ? "checked" : ""%>><label style="padding: 0 5px;" for="filter_tray_fermentation"><div class="circle-for" style="background: #f87e28"></div> Tray Fermentation</label>
+			</div>
+			<div class="columns small-4">
+				<input id="filter_basket_fermentation" type="checkbox" style="display: none" name="filter[basket_fermentation]" <%= @bt_fer == true ? "checked" : ""%>><label style="padding: 0 5px;" for="filter_basket_fermentation"><div class="circle-for" style="background: #00a1d6"></div> Basket Fermentation</label>
+			</div>
+			<br>
+			<hr>
+			<div class="columns small-6">
+				<%= f.input :country, collection: @countries, required: false, selected: @s_coun, include_blank: true %>
+			</div>
+			<div class="columns small-6">
+				<br><%= link_to "View all", "/", class: "button secondary" %>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>
+<style>
+	.circle-for{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+    margin-top: 3px;
+	}
+
+	input[type=checkbox]:checked + label{
+	  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+		-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+		box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+		border-radius: 3px;
+	}
+</style>
+<script>
+	$("input").change(function(){
+		$( ".simple_form.filter" ).submit();
+	})
+	$("#filter_country").change(function(){
+		$( ".simple_form.filter" ).submit();
+	})
+</script>

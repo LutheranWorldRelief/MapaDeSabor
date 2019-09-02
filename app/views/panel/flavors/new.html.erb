@@ -1,0 +1,7 @@
+<br>
+<div class="row">
+	<%= simple_form_for @flavor, url: panel_flavors_path, method: :post do |f| %>
+		<%= render partial: "panel/flavors/partials/form", locals: {f: f} %>
+		<%= f.button :submit, "Guardar", class: "primary button no-margin float-right" %>
+	<% end %>
+</div>

@@ -1,0 +1,83 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="https://www.jqueryscript.net/demo/Bootstrap-4-Chosen-Plugin/dist/css/component-chosen.css">
+<% unless flash.empty? %>
+      <script type="text/javascript">
+          <% flash.each do |f| %>
+          <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+          toastr['<%= type %>']('<%= f[1] %>');
+          <% end %>
+      </script>
+    <% end %>
+<div class="row">
+  <div class="container">
+    <div class="card card-body">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <h4><%= t('dashboard.contact.title') %></h4>
+          <p><small><i><%= t('dashboard.contact.desc') %></i></small></p>
+          <%= simple_form_for @contact, url: contacts_path, method: :post do |f| %>
+            <div class="form-group">
+              <%= f.input :name, input_html: { class: "form-control"}  %>
+            </div>
+            <div class="form-group">
+              <%= f.input :phone, input_html: { class: "form-control"}  %>
+            </div>
+            <div class="form-group">
+              <%= f.input :email, as: :email, input_html: { class: "form-control"}  %>
+            </div>
+            <div class="form-group">
+              <%= f.label :country %> <br>
+              <%= f.input :country, label: false, collection: CS.countries.map { |c| [c[1], c[1]] }, input_html: { class: "form-control form-control-chosen", data: { placeholder: t("dashboard.contact.country_placeholder") } }  %>
+            </div>
+            <div class="form-group">
+              <%= f.input :message, input_html: { class: "form-control"}  %>
+            </div>
+            <div class="form-group justify-content-center">
+              <div id="frm-result" style="color: red"></div>
+              <%= recaptcha_tags %>
+            </div>
+            <div class="form-group text-center">
+              <%= f.button :submit, t("dashboard.contact.btn_sub"), class: "btn btn-lg btn-success" %>
+            </div>
+          <% end %>
+          <br>
+        </div>
+        <div class="col-md-12">
+          <p style="text-align:center;"><i>
+            <%= t("dashboard.contact.footer_desc") %>
+          </i></p>
+          <p style="text-align:center;">
+            <img src="http://cacaomovil.com/media/uploads/2015/09/12/lwr-logotag.png" alt="logo" class="img-fluid mx-auto" style="max-width: 400px;">
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<style>
+  body{
+    overflow-x: hidden;
+  }
+  #contact_message{
+    height: 200px;
+  }
+</style>
+<script>
+function checkRecaptcha() {
+  res = $('#g-recaptcha-response').val();
+  if (res == "" || res == undefined || res.length == 0)
+    return false;
+  else
+    return true;
+}
+
+$('#new_contact').submit(function(e) {
+  if(!checkRecaptcha()) {
+    $( "#frm-result" ).text("Please validate your reCAPTCHA.");
+    return false;
+  }
+});
+$(".form-control-chosen").chosen();
+</script>

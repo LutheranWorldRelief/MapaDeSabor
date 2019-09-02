@@ -1,0 +1,38 @@
+%header
+  .row
+    .small-5.medium-8.columns
+      .header-titles
+        = link_to root_url do
+          = image_tag("site/logo.jpg", alt: "Lutheran World Relief")
+          %h1
+            = image_tag("site/title-cocoa.png", alt: "COCOA FLAVOR MAP")
+    .small-7.medium-4.text-right.columns
+      .social-media
+        = link_to "#", target: "_blank" do
+          = image_tag("site/facebook.png", alt: "LWR Facebook")
+        = link_to "#", target: "_blank" do
+          = image_tag("site/twitter.png", alt: "LWR Twitter")
+        = link_to "#", target: "_blank" do
+          = image_tag("site/instagram.png", alt: "LWR Instagram")
+        = link_to "#", target: "_blank" do
+          = image_tag("site/linkedin.png", alt: "LWR Linkedin")
+
+.light-sea-green-bar
+  .row
+    .medium-5.small-12.columns
+      %div{style: "padding: 5px 0; margin: 0;"}
+        = form_tag(search_content_url, method: :get) do
+          .form-style-8
+            = search_field_tag 'ft', params[:ft], placeholder: 'Buscar productos', class: "search-input-tag"
+            = image_tag("site/search-tiny.png", class: "icon-searcher")
+            =# submit_tag "BUSCAR", class: "button success tiny", style: "display:inline-block; margin: 0; float: left; color: white; font-weight: bold"
+    .medium-7.small-12.columns
+      .menu-container
+        %ul.menu.customized
+          %li{class: "#{controller_name == 'dashboard' && action_name == 'index' ? 'active' : ''}"}
+            %a{:href => root_url} Inicio
+          %li{class: "#{controller_name == 'dashboard' && action_name == 'about_us' ? 'active' : ''}"}
+            %a{:href => about_us_url} Nosotros
+          %li{class: "#{controller_name == 'contacts' ? 'active' : ''}"}
+            %a{:href => new_contact_url} Contactenos
+        .clearfix

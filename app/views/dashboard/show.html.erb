@@ -1,0 +1,104 @@
+<%= stylesheet_link_tag "lightslider" %>
+<%= javascript_include_tag "lightslider.min" %>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+  integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+  $(function() {
+    var slider;
+    return slider = $('#lightSlider').lightSlider({
+      item: 4,
+      autoWidth: false,
+      slideMove: 2,
+      slideMargin: 20,
+      mode: 'slide',
+      useCSS: true,
+      cssEasing: 'ease',
+      easing: 'linear',
+      speed: 400,
+      slideEndAnimation: true,
+      pause: 2000,
+      keyPress: false,
+      controls: true,
+      prevHtml: '',
+      nextHtml: '',
+      currentPagerPosition: 'middle',
+      enableTouch: true,
+      freeMove: true,
+      loop: true,
+      responsive: [
+        {
+          breakpoint: 800,
+          settings: {
+            item: 2,
+            slideMove: 1
+          }
+        }, {
+          breakpoint: 480,
+          settings: {
+            item: 2,
+            slideMove: 1
+          }
+        }
+      ]
+    });
+  });
+</script>
+<div class="row">
+  <div class="container">
+    <%= link_to "<i class='fas fa-arrow-left'></i> #{t('dashboard.show.btn_back')}".html_safe, root_path(locale: I18n.locale), class: "btn btn-secondary float-right" %>
+    <%= link_to "<i class='fas fa-file'></i> #{t('dashboard.show.btn_pdf')}".html_safe, dashboard_path(@place, format: :pdf), class: "btn btn-success", target: "_blank" %>
+    <br><br>
+  </div>
+</div>
+<% if I18n.locale.to_s == "es" %>
+  <%= render partial: "dashboard/partials/info_spanish" %>
+<%else%>
+  <%= render partial: "dashboard/partials/info_english" %>
+<%end%>
+<div class="row displays-movil">
+  <div class="col-md-12 cdl">
+    <div class="gray-container">
+      <h2 class="more-products-title">
+        <%= t('dashboard.show.more_products') %>
+      </h2>
+      <ul id="lightSlider">
+        <% @places.each_with_index do |place| %>
+          <li>
+            <% url = dashboard_url(place.slug) %>
+            <% if place.main_image.present? %>
+              <%= link_to(url) do %>
+                <h4 class="truncate">
+                  <%= place.name %>
+                </h4>
+                <span class="truncate">
+                  <%= place.producer.name + "," + place.producer.country.name %>
+                </span>
+              <% end %>
+              <%= link_to image_tag(place.main_image.url(:slider)), url %>
+            <% else %>
+              <%= link_to(url) do %>
+                <h4 class="truncate">
+                  <%= place.name %>
+                </h4>
+                <span class="truncate">
+                  <%= place.producer.name + "," + place.producer.country.name %>
+                </span>
+              <% end %>
+              <%= link_to url do %>
+                <img src="https://via.placeholder.com/300x200"/>
+              <% end %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

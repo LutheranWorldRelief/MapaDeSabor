@@ -1,0 +1,59 @@
+es:
+  layout:
+    partials:
+      header:
+        title: "Mapa de Sabores de Cacao"
+        links:
+          home: "Inicio"
+          about_us: "Sobre nosotros"
+          contact: "Contáctanos"
+      navbar:
+        item_1:
+          title: "Nuestros productos de Cacao"
+          section: "Cacao"
+        item_2:
+          title: "Descubre más sabores"
+          section_1: "Sabores"
+          section_2: "Origen"
+          section_3: "Tipos de fermentación"
+          fermentation_types:
+            box: "Fermentación en caja"
+            tray: "Fermentación en bandeja"
+            basket: "Fermentación en cesta"
+        remove: "Quitar filtros"
+  dashboard:
+    index:
+      partials:
+        map:
+          title: "Mapa de Sabores de Cacao"
+          price_cocoa: "Precio del Cacao"
+          values_in: "Valores en"
+          metric_tons: "Tonelada Métrica"
+        chart:
+          title: "Guía del Sabor"
+    about_us:
+      title_1: "Mapa regional de sabores de cacao"
+      title_2: "Objetivo"
+      title_3: "El proyecto incluye"
+    show:
+      btn_back: "Regresar"
+      btn_pdf: "Exportar a PDF"
+      title_1: "Calidad - Notas de sabor"
+      title_2: "Procesamiento"
+      title_3: "Cosecha"
+      title_4: "Generales"
+      more_products: "Más productos"
+    contact:
+      title: "Contact us"
+      desc: "Puedes contactarnos escribiéndonos al correo info@cacaomovil.com o utilizando nuestro formulario de contacto."
+      btn_sub: "Enviar"
+      country_placeholder: "Selecciona tu país"
+      footer_desc: "Lutheran World Relief es un ministerio de luteranos estadounidenses, que sirve a comunidades que viven en la pobreza extrema en todo el mundo."
+  activerecord:
+    contact:
+      name: "Nombre"
+      email: "Correo eléctronico"
+      phone: "Teléfono"
+      country: "País"
+      subject: "Asunto"
+      message: "Mensaje"

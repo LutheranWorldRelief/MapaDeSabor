@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h5><b><%= t("dashboard.index.partials.map.title") %></b></h5>
+  </div>
+  <div class="col-sm-6">
+    <div class="float-right">
+      <p><%= t("dashboard.index.partials.map.price_cocoa") %>: $<%= @price %><br><span style="color: #0EA600;"><%= "#{@pc} (#{@pcp})" %></span><br><span style="font-size: 10px;"> <%= t("dashboard.index.partials.map.values_in") %> <b>USD</b>. 1 <%= t("dashboard.index.partials.map.metric_tons") %></span><br></p>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+  integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+  <div class="row">
+    <div class="col-12">
+      <div id="mapid"></div>
+    </div>
+  </div>
+
+  <style>
+    #mapid { height: 500px; }
+    @media (max-width: 768px) {
+  	  #mapid { height: 300px; }
+    }
+    .leaflet-popup-content p{
+      margin: 0;
+    }
+  </style>
+  <script>
+  	var mymap = L.map('mapid').setView([13.701288, -89.224453], 5);
+
+  	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
+
+    var greenIcon = L.icon({
+        iconUrl: '/marker-icon.png',
+  			iconSize: [25, 41],
+        iconAnchor: [0, 41],
+
+    });
+
+  	<% if @places.size > 0 %>
+  		<% @places.each do |place| %>
+        <% if place.latitude.present? && place.longitude.present? %>
+  		    marker= L.marker([<%= place.latitude %>, <%= place.longitude %>],{icon: greenIcon, riseOnHover: true, permanent: true}).bindPopup('<img src="/CACAO_01.png" alt="" class="img-fluid" width="25px">&nbsp;<b><%= link_to place.name, dashboard_path(place) %></b><p><%= place.description.truncate(50) %></p>').addTo(mymap);
+        <% end %>
+      <% end %>
+    <% end %>
+    mymap.scrollWheelZoom.disable();
+
+    $(document).ready(function(){
+      if($(".price-scrap").next("p").text() == ""){
+        $(".price-scrap").next("p").remove();
+      }
+    });
+  </script>

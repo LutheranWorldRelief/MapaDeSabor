@@ -1,0 +1,26 @@
+.row
+  .medium-6.columns
+    = f.input :title
+  .medium-6.columns
+    = f.input :youtube_url
+%br
+.row
+  .medium-12.columns
+    = f.input :objective, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+%br
+.row
+  .medium-12.columns
+    = f.input :general, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+%br
+.row
+  .medium-12.columns
+    = f.input :objective_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+%br
+.row
+  .medium-12.columns
+    = f.input :general_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+%br
+.row
+  .medium-12.columns
+    = f.input :description, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+%br

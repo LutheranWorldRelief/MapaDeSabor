@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <table style="min-width: 600px; width: 600px; background-color: #eaeaea; color: #333; font-family: sans-serif; margin: 0 auto; padding: 30px;">
+      <tr>
+        <td style="font-size: 20px; text-align: center;">Correo de contacto de Mapa de Sabores</td>
+      </tr>
+      <tr>
+        <td>
+          <table style="padding: 20px" cellpadding="5" cellspacing="5">
+            <tr>
+              <td style="font-weight: bold;">Nombre de contacto</td>
+              <td><%= @contact.name%></td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Correo de contacto</td>
+              <td><%= @contact.email %></td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Teléfono de contacto</td>
+              <td><%= @contact.phone %></td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">País de contacto</td>
+              <td><%= @contact.country %></td>
+            </tr>
+          </table>
+          <table style="padding: 0 20px" cellpadding="5" cellspacing="5">
+            <tr>
+              <td style="font-weight: bold;">Mensaje</td>
+            </tr>
+            <tr>
+              <td><%= @contact.message %></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

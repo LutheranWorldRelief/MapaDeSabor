@@ -1,0 +1,99 @@
+.image-product{style: "#{@item.main_image.present? ? 'background:url('+@item.main_image.url+') no-repeat center center' : 'background:url(https://via.placeholder.com/1200x300)' }"  }
+  .title-product
+    %h2.product-title
+      = @item.name
+    %span
+      = @item.description
+
+.content
+  .row
+    .medium-8.small-7.columns
+      .row
+        .small-12.columns
+
+    .medium-12.columns{"data-aos" => "fade-up"}
+      %h2.alt
+        %span &nbsp;
+        General
+      .detail-container
+        %p.normal
+          = @item.content_left.html_safe rescue "-"
+  %br
+  .row
+    .medium-12.small-12.columns{"data-aos" => "fade-right"}
+      %h2.alt
+        %span &nbsp;
+        Processing
+      .detail-container
+        .container-text
+          %p
+            = @item.content_right.html_safe rescue "-"
+  %br
+  .row
+    .medium-12.small-12.columns{"data-aos" => "fade-left"}
+      %h2.alt
+        %span &nbsp;
+        Quality - Flavor Notes
+      .detail-container
+        .container-text
+          %p
+            = @item.quality_flavors.html_safe rescue "-"
+  %br
+  .row
+    .medium-12.small-12.columns{"data-aos" => "fade-right"}
+      %h2.alt
+        %span &nbsp;
+        Harvest
+      .detail-container
+        .container-text
+          %p
+            = @item.harvest.html_safe rescue "-"
+  %br
+  .row
+    .medium-12.small-12.columns{"data-aos" => "fade-left"}
+      %h2.alt
+        %span &nbsp;
+        Araña
+      .detail-container
+        .container-text
+          %p
+            = @item.scheme.html_safe rescue "-"
+
+  %br
+.row{"data-aos" => "fade-up"}
+  .small-12.columns
+    - unless @places.blank?
+      .gray-container
+        %h2.more-products-title
+          Más productos
+        -#
+          .text-right
+            %span Autoplay
+            .switch.small
+              %input#switch-slider.switch-input{:name => "switch-slider", :type => "checkbox"}/
+              %label.switch-paddle{:for => "switch-slider"}
+
+        .clearfix
+        %ul#lightSlider
+          - @places.each_with_index do |place|
+            %li
+              - url = product_url(place.id)
+              - if place.main_image.present?
+                =# url = place.youtube_url rescue nil
+                = link_to url do
+                  %h4.truncate
+                    = place.name
+                  %span.truncate
+                    = place.producer.name + "," + place.producer.country.name
+                = link_to image_tag(place.main_image.url(:slider)), url
+              - else
+                = link_to url do
+                  %h4.truncate
+                    = place.name
+                  %span.truncate
+                    = place.producer.name + "," + place.producer.country.name
+                = link_to url do
+                  %img{:src => "https://via.placeholder.com/300x200"}
+:javascript
+  //No quitar
+  document.body.querySelector('.main-container').addEventListener('scroll', AOS.refresh);

@@ -1,0 +1,8 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
+<%= f.input :name, label: "Nombre" %>
+<%#= f.input :flavor_type,collection: [["scatter","scatter"], ["polygon", "polygon"]], label: "Tipo" %>
+<%= f.input :color, label: "Color", input_html: { class: "jscolor" } %>
+<%= f.input :position_x, label: "Posicion X" %>
+<%= f.input :position_y, label: "Posicion Y" %>
+<%= f.input :position_z, label: "Radio" %>
+<%= f.input :order, label: "Orden", input_html: { value: @order } %>

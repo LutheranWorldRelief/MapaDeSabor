@@ -1,0 +1,38 @@
+%br
+.row
+  .medium-12.small-12.columns
+    %h2="Resultados de la búsqueda: "
+    %span= "'#{params[:ft]}'"
+    %br
+    %br
+    .general-search-results
+      - if @results.nil? || @results.empty?
+        %p
+          No hay resultados para su búsqueda
+      - else
+        .row
+          - @results.each_with_index do |result, i|
+            .small-12.columns
+              .callout{class: "#{i%2==0 ? 'default':'secondary'}"}
+                .row
+                  - if result.model_name == "Place"
+                    .small-8.columns
+                      = link_to product_url(result) do
+                        %p
+                          = "<span style='color:#A5CE3A !important;'>[Producto]</span>".html_safe + " " + result.name
+                        %span
+                          = strip_tags result.description
+                    .small-4.columns
+                      .align-right
+                        = link_to "Ver producto", product_url(result), class: "button primary"
+                  - else
+                    .small-8.columns
+                      = link_to about_us_url do
+                        %p
+                          = "<span style='color:#A5CE3A !important;'>[Página]</span>".html_safe + " " + result.title
+                        %span
+                          = strip_tags result.description
+                    .small-4.columns
+                      .align-right
+                        = link_to "Ver resultado", about_us_url, class: "button primary"
+%br

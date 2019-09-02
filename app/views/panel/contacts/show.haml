@@ -1,0 +1,33 @@
+%br
+.row
+  .small-12.medium-12.large-12
+    .callout.secondary
+      .row
+        .medium-9.columns
+          %h4= model.model_name.human(count: :one)
+
+    %table.table.table-hover.table-striped.simple-data-table
+      %tr
+        %td{width: "20%"} Nombre del contacto
+        %td= @item.name
+      %tr
+        %td{width: "20%"} País del contacto
+        %td= @item.country
+
+      %tr
+        %td{width: "20%"} Teléfono
+        %td= @item.phone
+
+      %tr
+        %td{width: "20%"} Correo
+        %td= @item.email
+
+      %tr
+        %td{width: "20%"} Asunto
+        %td= @item.subject
+      %tr
+        %td{width: "20%"} Mensaje
+        %td= strip_tags @item.message
+      %tr
+        %td{width: "20%"} Fecha de creación del mensaje
+        %td= @item.updated_at.strftime("%d/%m/%Y %H:%M")

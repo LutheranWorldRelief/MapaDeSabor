@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="container">
+    <div class="card card-body" style="display: block !important;">
+      <div class="row justify-content-center">
+        <div class="col-md-10 align-self-center">
+          <% if @page && @page.youtube_url? %>
+          <div>
+            <div class="video-wrapper">
+              <%= YoutubeEmbed.youtube_embed_url(@page.youtube_url, nil, nil).html_safe %>
+            <div>
+          </div>
+
+          <% end %>
+        </div>
+        <div class="col-md-12">
+          <br>
+          <br>
+          <% if @page && @page.description? %>
+          <h4><b><%= t("dashboard.about_us.title_1") %></b></h4>
+          <p><%= @page.description.html_safe %></p>
+          <% end %>
+          <% if I18n.locale.to_s == "es" %>
+            <% if @page && @page.objective? %>
+              <h4><b><%= t("dashboard.about_us.title_2") %></b></h4>
+              <p><%= @page.objective.html_safe %></p>
+            <% end %>
+            <% if @page && @page.general? %>
+              <h4><b><%= t("dashboard.about_us.title_3") %></b></h4>
+              <p><%= @page.general.html_safe %></p>
+            <% end %>
+          <% else %>
+            <% if @page && @page.objective_eng? %>
+              <h4><b><%= t("dashboard.about_us.title_2") %></b></h4>
+              <p><%= @page.objective_eng.html_safe %></p>
+            <% end %>
+            <% if @page && @page.general_eng? %>
+              <h4><b><%= t("dashboard.about_us.title_3") %></b></h4>
+              <p><%= @page.general_eng.html_safe %></p>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  body{
+    overflow-x: hidden;
+  }
+  iframe{
+    height: 700px;
+    width: 100%;
+  }
+</style>

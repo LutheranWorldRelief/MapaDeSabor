@@ -1,0 +1,175 @@
+<link rel="stylesheet" href="https://www.jqueryscript.net/demo/Bootstrap-4-Chosen-Plugin/dist/css/component-chosen.css">
+<nav class="navi" id="menu-active" data-status="false">
+  <div class="pad-menu"></div>
+  <div class="menu-nav" style="overflow-y: scroll; height: 93%;">
+    <br>
+    <ul>
+      <li style="margin-left: -20px; margin-right: -10px; padding: 10px 20px; background: #00cad6; font-weight: bold; ">
+        <span style="color: #fff"><%= t("layout.partials.navbar.item_1.title") %></span>
+      </li>
+      <li><a data-toggle="collapse" class="checking" data-id="1" href="#products_filter" role="button" aria-expanded="false" aria-controls="#products_filter" style="color: #0D9B39"><i class="fas seed"></i> <%= t("layout.partials.navbar.item_1.section") %> <i class="fas fa-angle-right float-right" style="line-height: 31px; font-size: 19px; transition: all 0.4s ease; transform: rotateZ(0deg);"></i></a>
+        <div class="collapse" id="products_filter">
+          <div>
+            <%= simple_form_for :place, url: search_dashboard_index_path, method: :get, remote: true do |f| %>
+            <%= f.input :search, label: false, input_html: { class: "form-control", autocomplete: "off" } %>
+            <% end %>
+            <div id="places" style="height: 250px; overflow-y: scroll; margin-top: 5px;">
+              <%= render partial: "dashboard/partials/places" %>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <%= simple_form_for :filter, url: "#", method: :get, remote: true do |f| %>
+    <ul>
+      <li style="margin-left: -20px; margin-right: -10px; padding: 10px 20px; background: #00cad6; font-weight: bold; ">
+        <span style="color: #fff"><%= t("layout.partials.navbar.item_2.title") %></span>
+      </li>
+
+      <div>
+        <li><a data-toggle="collapse" href="#flavors_filter" role="button" aria-expanded="false" aria-controls="flavors_filter" class="checking" data-id="2" style="color: #BDB55F"><i class="fas fa-flask"></i> <%= t("layout.partials.navbar.item_2.section_1") %> <i class="fas fa-angle-right float-right" style="line-height: 31px; font-size: 19px; transition: all 0.4s ease; transform: rotateZ(0deg);"></i></a>
+          <div class="collapse" id="flavors_filter">
+            <div>
+              <%= f.input :flavor, collection: @flavors.map { |e| [e.name, e.id] }, as: :check_boxes , label: false %>
+            </div>
+          </div>
+        </li>
+
+        <li><a data-toggle="collapse" href="#countries_filter" role="button" aria-expanded="false" aria-controls="countries_filter" class="checking" data-id="3" style="color: #6687A7"><i class="fas fa-globe-americas"></i> <%= t("layout.partials.navbar.item_2.section_2") %> <i class="fas fa-angle-right float-right" style="line-height: 31px; font-size: 19px; transition: all 0.4s ease; transform: rotateZ(0deg);"></i></a>
+          <div class="collapse" id="countries_filter">
+            <div>
+              <%= f.input :country, collection: @countries.map { |e| [e.name, e.id]  }, as: :check_boxes, label: false %>
+            </div>
+          </div>
+        </li>
+
+        <li><a data-toggle="collapse" href="#fermentation_filter" role="button" aria-expanded="false" aria-controls="fermentation_filter" class="checking" data-id="4" style="color: #618967"><i class="fas fa-thermometer-half "></i> <%= t("layout.partials.navbar.item_2.section_3") %> <i class="fas fa-angle-right float-right" style="line-height: 31px; font-size: 19px; transition: all 0.4s ease; transform: rotateZ(0deg);"></i></a>
+          <div class="collapse" id="fermentation_filter">
+            <div class="checkbox_fil">
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" name="filter[box_fermentation]" id="filter_box_fermentation">
+                <label class="form-check-label" for="filter_box_fermentation" ><%= t("layout.partials.navbar.item_2.fermentation_types.box") %></label>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" name="filter[tray_fermentation]" id="filter_tray_fermentation">
+                <label class="form-check-label" for="filter_tray_fermentation"><%= t("layout.partials.navbar.item_2.fermentation_types.tray") %></label>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" name="filter[basket_fermentation]" id="filter_basket_fermentation">
+                <label class="form-check-label" for="filter_basket_fermentation"><%= t("layout.partials.navbar.item_2.fermentation_types.basket") %></label>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!--<li>
+          <div>
+            <a href="/" class="btn-filter" style="font-size: 14px; color: #fb4953"><i class="fas fa-minus-circle"></i> <%#= t("layout.partials.navbar.remove") %></a>
+          </div>
+        </li>-->
+      </div>
+
+    </ul>
+    <% end %>
+  </div>
+</nav>
+<script>
+  $("input").change(function(){
+    $( ".simple_form.filter" ).submit();
+  })
+
+  $(".chosen-select").chosen({
+    max_selected_options: 1,
+    width: "100%"
+  });
+
+  $(".chosen-select").change(function(){
+    $( ".simple_form.filter" ).submit();
+  })
+
+  $(".checking").click(function(){
+    var id = $(this).data("id");
+    var transform = $(".checking[data-id="+ id +"] i.fa-angle-right").css("transform")
+    if(transform == "matrix(1, 0, 0, 1, 0, 0)"){
+      $(".checking[data-id="+ id +"] i.fa-angle-right").css("transform", "rotateZ(90deg)")
+      $(".checking[data-id="+ id +"]").css("font-weight", "bold")
+    }else{
+      $(".checking[data-id="+ id +"] i.fa-angle-right").css("transform", "rotateZ(0deg)")
+      $(".checking[data-id="+ id +"]").css("font-weight", "none")
+    }
+  });
+
+  $("#filter_place").change(function(){
+    window.location.replace("/dashboard/"+$(this).val().toString());
+  });
+
+  $("#ac-menu").click(function(){
+    var status = $("#menu-active").data("status")
+    if(status == true){
+      $("#menu-active").animate({
+        left: "0"
+      })
+      $("section.body").animate({
+        left: "20%",
+        width: "80%"
+      })
+      $("#menu-active").data("status", false)
+    }else{
+      $("#menu-active").animate({
+        left: "-50%"
+      })
+      $("section.body").animate({
+        left: "0%",
+        width: "100%"
+      })
+      $("#menu-active").data("status", true)
+    }
+  })
+  $(document).ready(function(){
+    if($("html").width() < 768 == true ){
+      $("#menu-active").data("status", true)
+      $("#menu-active").css("left", "-50%")
+      $("section.body").css("width", "100%")
+      $("section.body").css("left", "0")
+    }
+  })
+
+  $("#place_search").keyup(function(){
+    $(".simple_form.place").submit();
+  });
+
+</script>
+<style>
+  input.check_boxes{
+    margin-right: 10px;
+  }
+  .checking:hover{
+    font-weight: bold;
+  }
+  .item-place-link:hover{
+    color: #754d36 !important;
+      font-weight: bold !important;
+  }
+  nav.navi{
+    font-size: 14px !important;
+  }
+  .farmer-hat {
+  	background:url(<%= asset_url 'site/hat.png' %>);
+  	width: 23px;
+  	height: 15px;
+  }
+
+  .seed {
+    background:url(<%= asset_url 'site/seed.png' %>);
+    width: 18px;
+    height: 21px;
+  }
+
+  .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+    padding: 0 !important;
+  }
+  .checkbox_fil {
+    font-size: 14px;
+    margin-left: 0;
+  }
+</style>

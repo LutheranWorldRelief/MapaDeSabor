@@ -1,0 +1,42 @@
+<br>
+<div class="row">
+	<div class="small-12">
+		<h4>Sabores</h4>
+		<%= link_to "Nuevo", new_panel_flavor_path, class: 'primary button no-margin float-right' %>
+	</div>
+</div>
+<div class="row">
+	<div class="small-12">
+		<% if @flavors.size > 0 %>
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Estado</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @flavors.order(id: :asc).each do |fl| %>
+						<tr>
+							<td><%= link_to fl.name, panel_flavor_path(fl) %></td>
+							<td><%= link_to fl.is_visible == true ? "Activo" : "Inactivo" , change_status_panel_flavor_path(fl), class: "button #{ fl.is_visible == true ? "success" : "alert" }", method: :put %></td>
+							<td><%= link_to "Editar", edit_panel_flavor_path(fl), class: "button" %><%= link_to "Eliminar", panel_flavor_path(fl), method: :delete, data: { confirm: "Esta seguro?" }, class: "alert button" %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		<% else %>
+			<div class="label label-primary">
+				<p><b>Opps!</b> Todavía no se han creado registros.</p>
+			</div>
+		<% end %>
+	</div>
+</div>
+<style>
+	div.label{
+		width: 100%;
+		text-align: center;
+		background: #3f8dbf;
+	}
+</style>

@@ -1,0 +1,35 @@
+%br
+.row
+  .small-12.medium-12.large-12
+    .callout.secondary
+      .row
+        .medium-9.columns
+          %h4= model.model_name.human(count: :many)
+
+    %table.table.table-hover.table-striped.simple-data-table
+      %thead
+        %tr
+          %th{ width: '15%' } Nombre del contacto
+          %th{ width: '15%' } País del contacto
+          %th{ width: '15%' } Asunto
+          %th{ width: '25%' } Mensaje (extracto)
+          %th{ width: '15%' } Última modificación
+          %th{ width: '15%' }
+
+      %tbody
+        -if @items
+          - @items.each do |item|
+            %tr
+              %td
+                = item.name
+              %td
+                = item.country rescue "-"
+
+              %td
+                = item.subject rescue "-"
+              %td
+                = truncate(item.message, :ommision => "...", :length => 50) rescue "-"
+              %td
+                = item.updated_at.strftime("%d/%m/%Y %H:%M")
+              %td
+                = link_to "Ver mensaje", panel_contact_url(item), class: "button"

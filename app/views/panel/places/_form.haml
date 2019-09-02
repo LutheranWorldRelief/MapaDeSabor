@@ -1,0 +1,61 @@
+= f.association :producer
+= f.association :flavor
+
+.row
+  .medium-12.columns
+    = f.input :name, required: true
+  .medium-12.columns
+    = f.input :description
+  .medium-12.columns
+    = f.input :description_eng
+.row
+  .medium-6.columns
+    = f.input :latitude
+  .medium-6.columns
+    = f.input :longitude
+
+.row
+  .medium-6.columns
+    = f.input :x_axis
+  .medium-6.columns
+    = f.input :y_axis
+
+.row
+  .medium-12.columns
+    = f.label :fermentation_type
+    = f.select :fermentation_type, Place.fermentation_types.keys.map{ |i| [t(i, scope: 'activerecord.enum.place.fermentation_type'), i] }, include_blank: true, required: true
+
+.row
+  .medium-6.columns
+    = f.label :main_image do
+      = "Imagen"
+      = image_tag f.object.main_image.url, class: 'img-responsive img-thumbnail' rescue nil
+    = f.file_field :main_image, hide_label: true, accept: 'image/*'
+  .medium-6.columns
+    = f.input :youtube_url
+
+.row
+  .medium-6.columns
+    = f.input :content_left, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-6.columns
+    = f.input :content_left_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+.row
+  .medium-6.columns
+    = f.input :content_right, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-6.columns
+    = f.input :content_right_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+.row
+  .medium-6.columns
+    = f.input :quality_flavors, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-6.columns
+    = f.input :quality_flavors_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+.row
+  .medium-6.columns
+    = f.input :harvest, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-6.columns
+    = f.input :harvest_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+.row
+  .medium-6.columns
+    = f.input :scheme, as: :ckeditor, label: "Descripción del sabor/gráfico", input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-6.columns
+    = f.input :scheme_eng, as: :ckeditor, label: "Descripción del sabor/gráfico (Ingles)", input_html: { ckeditor: { toolbar: 'Full' } }

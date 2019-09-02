@@ -1,0 +1,117 @@
+<div id="content">
+  <div class="row">
+    <div class="container" style ="background: #fff">
+      <div class="box">
+        <div class="box-image"></div>
+      </div>
+      <div class="row">
+        <div class="container" style ="background: #fff">
+          <div class="row row-eq-height">
+            <div class="col-md-7 col-sm-12 cdl">
+              <h3><b><i class="fas fa-angle-right"></i> <%= @place.name %></b></h3>
+              <br>
+              <h4><b style="color: #8C795D"><%= t('dashboard.show.title_1') %></b></h4>
+        			<%= @place.quality_flavors_eng.html_safe rescue nil %>
+        		</div>
+        		<div class="col-md-5 col-sm-12 cdl">
+        			<%= @place.scheme_eng.html_safe rescue nil %>
+        		</div>
+        	</div>
+        </div>
+      </div>
+  	</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="container" style ="background: #fff">
+      <div class="row row-eq-height">
+    		<div class="col-md-7 col-sm-12 cdl">
+    			<h4><b style="color: #8C795D"><%= t('dashboard.show.title_2') %></b></h4>
+    			<%= @place.content_right_eng.html_safe rescue nil %>
+    		</div>
+        <div class="col-md-5 col-sm-12 cdl">
+          <h4><b style="color: #8C795D"><%= t('dashboard.show.title_3') %></b></h4>
+          <%= @place.harvest_eng.html_safe rescue nil %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="container" style ="background: #fff">
+      <div class="row row-eq-height">
+        <div class="col-md-7 col-sm-12 cdl">
+          <h4><b style="color: #8C795D"><%= t('dashboard.show.title_4') %></b></h4>
+          <p><%= @place.description_eng %></p>
+          <%= @place.content_left_eng.html_safe rescue nil %>
+        </div>
+        <div class="col-md-5 col-sm-12 cdl">
+          <div id="mapid"></div>
+          <style>
+            #mapid { 
+              height: 288px;
+            }
+            @media (max-width: 768px) {
+              #mapid { height: 300px; }
+            }
+          </style>
+          <script>
+            var mymap = L.map('mapid').setView([<%= @place.latitude %>, <%= @place.longitude %>], 20);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
+              var greenIcon = L.icon({
+                iconUrl: '<%= asset_url("marker-icon.png") %>',
+                iconSize: [25, 41],
+                iconAnchor: [0, 41],
+              });
+            marker = L.marker([<%= @place.latitude %>, <%= @place.longitude %>],{icon: greenIcon}).bindPopup('Latitude: <%= @place.latitude %>, Longitude: <%= @place.longitude %>').addTo(mymap);
+
+            mymap.scrollWheelZoom.disable();
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<style>
+  body{
+    overflow-x: hidden;
+  }
+  @media (max-width: 768px){
+    .displays-movil{
+      display: none;
+    }
+  }
+	.box{
+		background: #fff;
+	}
+	.box .box-content{
+		padding: 10px;
+	}
+	.box .box-content p{
+		color: #5d6c83;
+	}
+	.box .box-content p b{
+		color: #1b1b1b;
+	}
+	.box .box-content p b:hover{
+		color: #fd6469;
+	}
+	.box .box-content h3 b{
+		color: #1b1b1b;
+	}
+	.box .box-content h3 b:hover{
+		color: #fd6469;
+	}
+	.box .box-image{
+		height: 400px;
+    margin: 0 -15px 0;
+		background: url("<%= @place.main_image.url %>") !important;
+		background-repeat: no-repeat !important;
+		background-size: cover !important;
+		background-attachment: fixed !important;
+	}
+	.cdl{
+		padding-top: 10px;
+	}
+</style>

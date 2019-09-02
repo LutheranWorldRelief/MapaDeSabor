@@ -1,0 +1,56 @@
+<br>
+<h3><%= @flavor.name %></h3>
+<br>
+<div class="row">
+	<div class="small-12">
+		<%= link_to "Regresar", panel_flavors_path, class: "secondary button float-right" %>
+		<h5>
+			<span>Tipo <%= @flavor.flavor_type %></span><br>
+			<span>Color <%= @flavor.color %></span><br>
+		</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="small-12">
+		<%= simple_form_for @flavor_item, url: create_flavor_item_panel_flavor_path(@flavor), method: :post do |f| %>
+			<%= f.input :position_x, label: "Posicion X" %>
+			<%= f.input :position_y, label: "Posicion Y" %>
+			<%= f.input :order, label: "Orden", input_html: { value: @order } %>
+			<%= f.button :submit, "Guardar", class: "primary button no-margin float-right" %>
+		<% end %>
+	</div>
+</div>
+<div class="row">
+	<% if @flavor.flavor_items.size > 0 %>
+	<h4>Data: posiciones</h4>
+	<table>
+		<thead>
+			<th>X</th>
+			<th>Y</th>
+			<th>Order</th>
+			<th></th>
+		</thead>
+		<tbody>
+			<% @flavor.flavor_items.order(id: :asc).each do |fi| %>
+				<tr>
+					<td><%= fi.position_x %></td>
+					<td><%= fi.position_y %></td>
+					<td><%= fi.order %></td>
+					<td><%= link_to "Eliminar", destroy_flavor_item_panel_flavor_path(fi), method: :delete, data: { confirm: "Esta seguro?" }, class: "alert button" %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<% else %>
+	<div class="label label-primary">
+		<p><b>Opps!</b> Todavía no se han creado registros.</p>
+	</div>
+	<% end %>
+</div>
+<style>
+	div.label{
+		width: 100%;
+		text-align: center;
+		background: #3f8dbf;
+	}
+</style>
