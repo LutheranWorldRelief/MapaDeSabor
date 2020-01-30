@@ -33,29 +33,56 @@
     = f.file_field :main_image, hide_label: true, accept: 'image/*'
   .medium-6.columns
     = f.input :youtube_url
+.row
+  .medium-6.columns
+    = f.input :scheme, as: :ckeditor, label: "Descripción del sabor y gráfico", input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-6.columns
+    = f.input :scheme_eng, as: :ckeditor, label: "Descripción del sabor y gráfico (Ingles)", input_html: { ckeditor: { toolbar: 'Full' } }
 
+%h5 Notas de sabor/ Flavor Notes
 .row
-  .medium-6.columns
-    = f.input :content_left, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
-  .medium-6.columns
-    = f.input :content_left_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-3.columns
+    = f.input :bean_size, label: "Bean Size / Tamaño del frijol"
+  .medium-3.columns
+    = f.input :well_fermented, label: "Well fermented / Bien fermentado"
+  .medium-3.columns
+    = f.input :semi_fermented, label: "Semi fermented / Semi fermentado"
+  .medium-3.columns
+    = f.input :defects, label: "Defects / Defectos"
 .row
-  .medium-6.columns
-    = f.input :content_right, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
-  .medium-6.columns
-    = f.input :content_right_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-4.columns
+    = f.input :toast_conditions, label: "Toast Conditions / Condiciones de tostado"
+  .medium-4.columns
+    = f.input :licor, label: "Liquor / Licor"
+  .medium-4.columns
+    = f.input :chocolate
+%br
+%hr
 .row
   .medium-6.columns
     = f.input :quality_flavors, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
   .medium-6.columns
     = f.input :quality_flavors_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+
 .row
   .medium-6.columns
     = f.input :harvest, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
   .medium-6.columns
     = f.input :harvest_eng, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } }
+
 .row
   .medium-6.columns
-    = f.input :scheme, as: :ckeditor, label: "Descripción del sabor/gráfico", input_html: { ckeditor: { toolbar: 'Full' } }
+    = f.input :content_right, as: :ckeditor, label: "Procesamiento", input_html: { ckeditor: { toolbar: 'Full' } }
   .medium-6.columns
-    = f.input :scheme_eng, as: :ckeditor, label: "Descripción del sabor/gráfico (Ingles)", input_html: { ckeditor: { toolbar: 'Full' } }
+    = f.input :content_right_eng, as: :ckeditor, label: "Process",  input_html: { ckeditor: { toolbar: 'Full' } }
+
+.row
+  .medium-6.columns
+    = f.input :content_left, as: :ckeditor, label: "Generalidades", input_html: { ckeditor: { toolbar: 'Full' } }
+  .medium-6.columns
+    = f.input :content_left_eng, as: :ckeditor, label: "Generalidades",input_html: { ckeditor: { toolbar: 'Full' } }
+
+.row
+  .medium-12.columns
+    = f.input :featured, required: false, hide_label: true, accept: 'image/*'
+    = image_tag f.object.featured.url, class: 'img-responsive img-thumbnail' rescue nil

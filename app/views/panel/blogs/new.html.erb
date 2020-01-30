@@ -1,0 +1,9 @@
+<%= simple_form_for @blog, url: panel_blogs_path, method: :post do |f| %>
+	<%= f.input :title %>
+	<%= f.input :body, as: :ckeditor, input_html: { ckeditor: { toolbar: 'Full' } } %>
+	<%= f.input :autor %>
+	<%= f.input :presentation, accept: 'image/*' %>
+	<%= f.input :status, collection: [['Enable', 'enable'], ['Disable', 'disable']], include_blank: false %>
+	<%= f.submit 'Guardar', class: 'button' %>
+	<%= link_to 'Regresar', panel_blogs_path, class: 'button' %>
+<% end %>

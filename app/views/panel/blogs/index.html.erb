@@ -1,0 +1,43 @@
+<%= link_to "Nueva noticia", new_panel_blog_path, class: 'button' %><br>
+<table>
+	<thead>
+		<tr>
+      <th></th>
+			<th>Titulo</th>
+			<td>Estado</td>
+			<td>Creado hace </td>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @blogs.each do |blog| %>
+		<tr>
+      <td><img src="<%= blog.presentation.url %>" alt="" class="img-fluid" width="75px"></td>
+			<td><%= blog.title %></td>
+			<td><span class="label label-<%= blog.status %>"><%= blog.status %></span></td>
+			<td><%= blog.created_at.strftime('%d-%m-%Y %I:%M%p') %></td>
+			<td>
+				<%= link_to 'Editar', edit_panel_blog_path(blog), class: 'button' %>
+				<%= link_to 'Eliminar', panel_blog_path(blog), method: :delete, data: { confirm: 'Esta seguro de eliminar?' }, class: 'button alert' %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+<style>
+	span.label{
+		padding: 4px 6px;
+    border-radius: 3px
+	}
+  span.label.label-enable{
+    background-color: #2199e8;
+  }
+  span.label.label-disable{
+    background-color: #ec5840;
+  }
+  img.img-fluid{
+    display: block; 
+    max-width: 100%;
+    height: auto;
+  }
+</style>
