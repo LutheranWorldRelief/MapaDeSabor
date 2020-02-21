@@ -18,6 +18,7 @@
 </div-->
 <%= stylesheet_link_tag "lightslider" %>
 <%= javascript_include_tag "lightslider.min" %>
+
 <script>
   $(function() {
     var slider;
@@ -71,12 +72,17 @@
         <% @featured_products.each_with_index do |fp| %>
           <li>
             <a href="/dashboard/<%= fp.slug %>" class="lnk-featured-promo">
-              <h4 class="truncate" style="width: 150px;font-size: 20px;margin: 0 auto;text-align: center;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+              <h4 class="truncate" style="width: 180px;font-size: 20px;margin: 0 auto;text-align: center;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
                 <%= fp.name %>
               </h4>
               <span class="truncate"></span>
-              <img src="<%= fp.featured %>" class="mx-auto d-block" style="display: block !important; width:40%"/>
+              <img src="<%= fp.featured %>" class="mx-auto d-block" style="display: block !important; width:40%"/>              
             </a>
+            <% if I18n.locale.to_s == "es" %>
+              <%= fp.award_desc_es.html_safe rescue nil %>
+            <% else%>
+              <%= fp.award_desc_en.html_safe rescue nil %>
+            <% end%>
           </li>
         <% end %>
       </ul>

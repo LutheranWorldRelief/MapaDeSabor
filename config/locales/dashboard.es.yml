@@ -2,7 +2,7 @@ es:
   layout:
     partials:
       header:
-        title: "Mapa de Sabores de Cacao"
+        title: "MAPA DE SABORES DE CACAO"
         links:
           home: "Inicio"
           about_us: "Sobre nosotros"

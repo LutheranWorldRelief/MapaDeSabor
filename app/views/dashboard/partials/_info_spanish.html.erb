@@ -2,6 +2,7 @@
   <div id="bg-content-flavor">
     <div class="row">
       <div class="container-fluid">
+        <%= link_to "<i class='fas fa-angle-left fa-2x'></i>".html_safe, root_path(locale: I18n.locale), class: "btn btn-success float-left" %>
         <div class="box">
           <div class="box-image"></div>
         </div>
@@ -84,7 +85,7 @@
                   </div>
                 </div>
                 <br>
-                <%= @place.quality_flavors.html_safe%>
+                <%= @place.quality_flavors.html_safe %>
               </div>
             </div>
           </div>
@@ -129,11 +130,19 @@
               }
             </style>
             <script>
-              var mymap = L.map('mapid').setView([<%= @place.latitude %>, <%= @place.longitude %>], 20);
-              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+              var mymap = L.map('mapid').setView([<%= @place.latitude %>, <%= @place.longitude %>], 12);
+              token = 'pk.eyJ1Ijoid2lsbGlhbXNjb2RlY2FzdGxlIiwiYSI6ImNrMzBna2lxMDAwZXUzZ3BpNDdnbTQ1YjAifQ.KpPp25_1XiOMbULSHp5Jhw';
+              
+              var gl = L.mapboxGL({
+                accessToken: token,
+                style: 'mapbox://styles/mapbox/streets-v11'
+              }).addTo(mymap);
+
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+                {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
                 var greenIcon = L.icon({
-                  iconUrl: '<%= asset_url("marker-icon.png") %>',
-                  iconSize: [25, 41],
+                  iconUrl: '<%= asset_url("ball_1.png") %>',
+                  iconSize: [41, 41],
                   iconAnchor: [0, 41],
                 });
               marker = L.marker([<%= @place.latitude %>, <%= @place.longitude %>],{icon: greenIcon}).bindPopup('Latitud: <%= @place.latitude %>, Longitud: <%= @place.longitude %>').addTo(mymap);
@@ -246,6 +255,12 @@
     background-color: #fff;
     background-image: url(<%= asset_path 'site/mapa_bg.png' %>)
 
+  }
+  .btn-success {
+    color: #fff;
+    background-color: #e7a614;
+    border-color: #e7a614;
+    box-shadow: 2px 2px 4px #000000a3;
   }
 
 </style>

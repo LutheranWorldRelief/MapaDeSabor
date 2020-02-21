@@ -2,7 +2,7 @@ en:
   layout:
     partials:
       header:
-        title: "Cocoa Flavor Map"
+        title: "COCOA FLAVOR MAP"
         links:
           home: "Home"
           about_us: "About us"

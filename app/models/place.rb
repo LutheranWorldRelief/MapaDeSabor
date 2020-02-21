@@ -34,6 +34,8 @@
 #  content_left_eng        :text
 #  scheme_eng              :text
 #  featured                :string
+#  award_desc_es           :string
+#  award_desc_en           :string
 #
 
 class Place < ApplicationRecord
@@ -53,10 +55,13 @@ class Place < ApplicationRecord
   validates_attachment_content_type :main_image, content_type: /\Aimage/
 
   has_attached_file :graphic_one, styles: { original: '960>', slider: '300x200!' }
-  validates_attachment_content_type :main_image, content_type: /\Aimage/
+  validates_attachment_content_type :graphic_one, content_type: /\Aimage/
 
   has_attached_file :graphic_two, styles: { original: '960>', slider: '300x200!' }
-  validates_attachment_content_type :main_image, content_type: /\Aimage/
+  validates_attachment_content_type :graphic_two, content_type: /\Aimage/
+
+  #has_attached_file :featured, styles: { original: '960>', slider: '300x200!' }
+  #validates_attachment_content_type :featured, content_type: /\Aimage/
 
   validates :youtube_url,
             format: URI.regexp(%w(http https)),

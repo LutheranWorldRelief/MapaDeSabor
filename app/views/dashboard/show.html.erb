@@ -7,6 +7,13 @@
   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
 
 
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet'>
+
+<script src="https://unpkg.com/mapbox-gl-leaflet/leaflet-mapbox-gl.js"></script>
+
+
+
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
@@ -58,8 +65,8 @@
 <%end%>
 <div class="row">
   <div class="container-fluid">
-    <%= link_to "<i class='fas fa-arrow-left'></i> #{t('dashboard.show.btn_back')}".html_safe, root_path(locale: I18n.locale), class: "btn btn-secondary float-right" %>
-    <%= link_to "<i class='fas fa-file'></i> #{t('dashboard.show.btn_pdf')}".html_safe, dashboard_path(@place, format: :pdf), class: "btn btn-success", target: "_blank" %>
+    <%#= link_to "<i class='fas fa-arrow-left'></i> #{t('dashboard.show.btn_back')}".html_safe, root_path(locale: I18n.locale), class: "btn btn-secondary float-right" %>
+    <%= link_to "<i class='fas fa-file'></i> #{t('dashboard.show.btn_pdf')}".html_safe, dashboard_path(@place, format: :pdf), class: "btn btn-success", style: "background-color:#E7A614", target: "_blank" %>
     <br><br>
   </div>
 </div>

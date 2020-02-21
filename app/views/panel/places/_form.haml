@@ -95,7 +95,11 @@
   .medium-6.columns
     = f.input :content_left_eng, as: :ckeditor, label: "Generalidades",input_html: { ckeditor: { toolbar: 'Full' } }
 
+%h5 Premios/Awards
 .row
-  .medium-12.columns
-    = f.input :featured, required: false, hide_label: true, accept: 'image/*'
+  .medium-6.columns
+    = f.input :featured, required: false, hide_label: true, accept: 'image/*', label: "Foto/Picture"
     = image_tag f.object.featured.url, class: 'img-responsive img-thumbnail' rescue nil
+  .medium-6.columns
+    = f.input :award_desc_es, label: "Descripción del premio", as: :ckeditor
+    = f.input :award_desc_en, label: "Award description", as: :ckeditor
