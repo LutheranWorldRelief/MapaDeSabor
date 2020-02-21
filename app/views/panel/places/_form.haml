@@ -97,6 +97,7 @@
 
 %h5 Premios/Awards
 .row
+  = f.input :is_featured, label: "¿Es producto destacado? / Is an award winning Cocoa?"
   .medium-6.columns
     = f.input :featured, required: false, hide_label: true, accept: 'image/*', label: "Foto/Picture"
     = image_tag f.object.featured.url, class: 'img-responsive img-thumbnail' rescue nil

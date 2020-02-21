@@ -29,7 +29,7 @@ class DashboardController < ApplicationController
   end
 
   def new_index
-    @featured_products = Place.select(:id, :featured, :name, :slug)
+    @featured_products = Place.select(:id, :featured, :name, :slug, :award_desc_es, :award_desc_en).where(is_featured: true)
     @blogs = Blog.where(status: 'enable').order(id: :desc)
     
     @price = ""
