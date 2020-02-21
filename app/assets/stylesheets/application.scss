@@ -11,12 +11,21 @@
 @import 'MarkerCluster.Default';
 
 
+@font-face {
+  font-family: "coolveticarg";
+  src: url('fonts/coolveticarg.woff'), url('fonts/coolveticarg.eot'), url('fonts/coolveticarg.otf'), url('fonts/coolveticarg.svg'), url('fonts/coolveticarg.ttf'), url('fonts/coolveticarg.woff2');
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
   font-family: 'Open Sans', sans-serif;
+}
+
+h5.featured-products b{
+  color: #E7A614
 }
 
 p {
@@ -872,3 +881,6 @@ footer {
 .box{
   // position: absolute;
 }
+
+
+

@@ -2,14 +2,16 @@
 #
 # Table name: pages
 #
-#  id          :integer          not null, primary key
-#  title       :string
-#  objective   :text
-#  general     :text
-#  description :text
-#  youtube_url :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id            :integer          not null, primary key
+#  title         :string
+#  objective     :text
+#  general       :text
+#  description   :text
+#  youtube_url   :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  objective_eng :text
+#  general_eng   :text
 #
 
 class Page < ApplicationRecord

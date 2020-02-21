@@ -9,6 +9,16 @@ class DashboardController < ApplicationController
   def index
   end
 
+  def blog
+    if params[:id].present?
+      @blog = Blog.friendly.find(params[:id])
+      @blogs = Blog.where.not(id: @blog.id).order(id: :desc).limit(5)
+    else
+      redirect_to '/'
+    end
+    render layout: "landing_cocoa"
+  end
+
   def about_us
     @page = Page.first rescue nil
     render layout: "landing_cocoa"
@@ -19,9 +29,13 @@ class DashboardController < ApplicationController
   end
 
   def new_index
+    @featured_products = Place.select(:id, :featured, :name, :slug)
+    @blogs = Blog.where(status: 'enable').order(id: :desc)
+    
     @price = ""
     @pc = ""
     @pcp = ""
+    @places = Place.all
 
     doc = Nokogiri::HTML(open('https://es.investing.com/commodities/us-cocoa'))
     doc.search('.pid-8894-last').each do |price|
@@ -151,6 +165,10 @@ class DashboardController < ApplicationController
           layout: "pdf"
       end
     end
+  end
+
+  def with_abs_path(htmlstring)
+    htmlstring.to_s.gsub(/(href|src)=(['"])\/([^\"']*|[^"']*)['"]/, '\1=\2' + 'address_of_server' + '\3\2')
   end
 
   private

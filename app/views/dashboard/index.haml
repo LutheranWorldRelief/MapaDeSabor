@@ -6,7 +6,7 @@
   var zone_sizes   = [85, 85, 85] //Tamaño de los circulos
   var data         = zones.concat(#{@points.to_json})
   var data_colors  = zone_colors.concat(#{@point_colors.to_json})
-  var data_sizes   = zone_sizes.concat(#{Array.new(@points.size, 9)})
+  //var data_sizes   = zone_sizes.concat(#{Array.new(@points.size, 9)})
 
 
   window.onload = function() {
@@ -409,7 +409,7 @@
 
 .row
   .columns.small-12
-
+    %br
     %br
     %h2 GUÍA DEL SABOR
     %br

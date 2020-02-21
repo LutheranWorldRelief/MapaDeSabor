@@ -1,72 +1,144 @@
-<div id="content">
-  <div class="row">
-    <div class="container" style ="background: #fff">
-      <div class="box">
-        <div class="box-image"></div>
-      </div>
-      <div class="row">
-        <div class="container" style ="background: #fff">
-          <div class="row row-eq-height">
-            <div class="col-md-7 col-sm-12 cdl">
-              <h3><b><i class="fas fa-angle-right"></i> <%= @place.name %></b></h3>
-              <br>
-              <h4><b style="color: #8C795D"><%= t('dashboard.show.title_1') %></b></h4>
-        			<%= @place.quality_flavors_eng.html_safe rescue nil %>
-        		</div>
-        		<div class="col-md-5 col-sm-12 cdl">
-        			<%= @place.scheme_eng.html_safe rescue nil %>
-        		</div>
-        	</div>
+<div id="content bg-content">
+  <div id="bg-content-flavor">
+    <div class="row">
+      <div class="container-fluid">
+        <div class="box">
+          <div class="box-image"></div>
         </div>
-      </div>
-  	</div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="container" style ="background: #fff">
-      <div class="row row-eq-height">
-    		<div class="col-md-7 col-sm-12 cdl">
-    			<h4><b style="color: #8C795D"><%= t('dashboard.show.title_2') %></b></h4>
-    			<%= @place.content_right_eng.html_safe rescue nil %>
-    		</div>
-        <div class="col-md-5 col-sm-12 cdl">
-          <h4><b style="color: #8C795D"><%= t('dashboard.show.title_3') %></b></h4>
-          <%= @place.harvest_eng.html_safe rescue nil %>
+        <div class="row">
+          <div class="container-fluid">
+            <div class="row row-eq-height">
+              <div class="col-md-10 col-sm-10 offset-md-1 cdl">
+                <br>
+                <br>
+                <h1 class="title-name taste-notes"><b><%= @place.name %></b></h1>
+                <p class="place-desc"><%= @place.scheme_eng.html_safe %></p>
+                <br>
+                <%if @place.graphic_one.present? && @place.graphic_two.present?%>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="col-md-9 offset-md-3">
+                      <%= image_tag @place.graphic_one.url.nil? ? "" : @place.graphic_one.url, class: "img-fluid"%>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="col-md-9 offset-md-0">
+                        <%= image_tag @place.graphic_two.url.nil? ? "" : @place.graphic_two.url, class: "img-fluid"%>
+                      </div>
+                    </div>
+                  </div>
+                <%elsif @place.graphic_one.present?%>
+                  <div class="col-md-5 offset-md-3">
+                    <%= image_tag @place.graphic_one.url.nil? ? "" : @place.graphic_one.url, class: "img-fluid", style:"margin-left:11%" %>
+                  </div>
+                <%elsif @place.graphic_two.present?%>
+                  <div class="col-md-5 offset-md-3">
+                    <%= image_tag @place.graphic_two.url.nil? ? "" : @place.graphic_two.url, class: "img-fluid", style:"margin-left:11%" %>
+                  </div>
+                <%else%>
+                <%end%>
+                <br>
+                <br>
+                <h4><b class="taste-notes" style="color: #472a2b"><%= t('dashboard.show.title_1') %></b></h4>
+                <br>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <br>
+                  <div class="col-md-3 offset-3 taste-notes">
+                    <%= image_tag("site/chocolate-icon-png-3.png", class: "img-responsive place-icon location-icon")%>
+                    <br>
+                    <p class="taste-notes-desc"><%= @place.chocolate_eng.html_safe rescue nil %></p>
+                  </div>
+                  <div class="col-md-3 taste-notes">
+                    <%= image_tag("site/licor_icon.png", class: "img-responsive place-icon location-icon")%>
+                    <br>
+                    <p class="taste-notes-desc"><%= @place.liquor_eng.html_safe rescue nil %></p>
+                  </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">                
+                  <div class="col-md-2 offset-md-1 taste-notes">
+                    <h1><%= @place.bean_size.html_safe %></h1>
+                    <p class="taste-notes-desc">gr/frijol<br>Bean size</p>
+                  </div>
+                  <div class="col-md-2 taste-notes">
+                    <h1><%= @place.well_fermented.html_safe %></h1>
+                    <p class="taste-notes-desc">Well fermented<br>Beans</p>
+                  </div>
+                  <div class="col-md-2 taste-notes">
+                    <h1><%= @place.semi_fermented.html_safe %></h1>
+                    <p class="taste-notes-desc">Semi fermented<br>Beans</p>
+                  </div>
+                  <div class="col-md-2 taste-notes">
+                    <h1><%= @place.defects.html_safe %></h1>
+                    <p class="taste-notes-desc">Defects</p>
+                  </div>
+                  <div class="col-md-2 taste-notes">
+                    <h1><%= @place.toast_conditions.html_safe.rpartition('C; ').first + "C"%></h1>
+                    <p class="taste-notes-desc"><%=@place.toast_conditions.html_safe.rpartition('C;').last%><br>
+                    Roasting conditions</p>
+                  </div>
+                </div>
+                <br>
+                <%= @place.quality_flavors.html_safe %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="container" style ="background: #fff">
-      <div class="row row-eq-height">
-        <div class="col-md-7 col-sm-12 cdl">
-          <h4><b style="color: #8C795D"><%= t('dashboard.show.title_4') %></b></h4>
-          <p><%= @place.description_eng %></p>
-          <%= @place.content_left_eng.html_safe rescue nil %>
+    <div class="row">
+      <div class="container-fluid">
+        <div class="row row-eq-height" style="padding-top:2%; padding-bottom:4%">
+          <div class="col-md-6 col-sm-12 cdl">
+            <br>
+            <h4 class="hardvest"><b style="color: #472a2b"><%= t('dashboard.show.title_3') %></b></h4>
+            <%= @place.harvest.html_safe %>
+            
+          </div>
+          <div class="col-md-6 col-sm-12 process-desc">
+            <div class="cdl">
+              <h4><b class="process-desc" style="color: #472a2b"><%= t('dashboard.show.title_2') %></b></h4>
+            </div>
+            <%= @place.content_right_eng.html_safe %>         
+          </div>
         </div>
-        <div class="col-md-5 col-sm-12 cdl">
-          <div id="mapid"></div>
-          <style>
-            #mapid { 
-              height: 288px;
-            }
-            @media (max-width: 768px) {
-              #mapid { height: 300px; }
-            }
-          </style>
-          <script>
-            var mymap = L.map('mapid').setView([<%= @place.latitude %>, <%= @place.longitude %>], 20);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
-              var greenIcon = L.icon({
-                iconUrl: '<%= asset_url("marker-icon.png") %>',
-                iconSize: [25, 41],
-                iconAnchor: [0, 41],
-              });
-            marker = L.marker([<%= @place.latitude %>, <%= @place.longitude %>],{icon: greenIcon}).bindPopup('Latitude: <%= @place.latitude %>, Longitude: <%= @place.longitude %>').addTo(mymap);
+      </div>
+    </div>
+    <div class="row">
+      <div class="container-fluid">
+        <div class="row row-eq-height">
+          <div class="col-md-6 col-sm-12 cdl process-desc" style="text-align: left !important;padding-left: 5%">
+            <h4><b style="color: #472a2b"><%= t('dashboard.show.title_4') %></b></h4>
+            <p><%#= @place.description %></p>
+            <p style="text-align: left !important;"><%= @place.content_left_eng.html_safe rescue nil %></p>
+          </div>
+          <div class="col-md-6 col-sm-12 cdl cocoa-bg">
+            <div id="mapid"></div>
+            <style>
+              #mapid { 
+                height: 288px;
+                margin-top: 5%;
+              }
+              @media (max-width: 768px) {
+                #mapid { height: 300px; margin-top: 5%}
+              }
+            </style>
+            <script>
+              var mymap = L.map('mapid').setView([<%= @place.latitude %>, <%= @place.longitude %>], 20);
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
+                var greenIcon = L.icon({
+                  iconUrl: '<%= asset_url("marker-icon.png") %>',
+                  iconSize: [25, 41],
+                  iconAnchor: [0, 41],
+                });
+              marker = L.marker([<%= @place.latitude %>, <%= @place.longitude %>],{icon: greenIcon}).bindPopup('Latitud: <%= @place.latitude %>, Longitud: <%= @place.longitude %>').addTo(mymap);
 
-            mymap.scrollWheelZoom.disable();
-          </script>
+              mymap.scrollWheelZoom.disable();
+            </script>
+          </div>
         </div>
       </div>
     </div>
@@ -82,36 +154,97 @@
       display: none;
     }
   }
-	.box{
-		background: #fff;
-	}
-	.box .box-content{
-		padding: 10px;
-	}
-	.box .box-content p{
-		color: #5d6c83;
-	}
-	.box .box-content p b{
-		color: #1b1b1b;
-	}
-	.box .box-content p b:hover{
-		color: #fd6469;
-	}
-	.box .box-content h3 b{
-		color: #1b1b1b;
-	}
-	.box .box-content h3 b:hover{
-		color: #fd6469;
-	}
-	.box .box-image{
-		height: 400px;
+  .box{
+    background: #fff;
+  }
+  .box .box-content{
+    padding: 10px;
+  }
+  .box .box-content p{
+    color: #5d6c83;
+  }
+  .box .box-content p b{
+    color: #1b1b1b;
+  }
+  .box .box-content p b:hover{
+    color: #fd6469;
+  }
+  .box .box-content h3 b{
+    color: #1b1b1b;
+  }
+  .box .box-content h3 b:hover{
+    color: #fd6469;
+  }
+  .box .box-image{
+    height: 315px;
     margin: 0 -15px 0;
-		background: url("<%= @place.main_image.url %>") !important;
-		background-repeat: no-repeat !important;
-		background-size: cover !important;
-		background-attachment: fixed !important;
-	}
-	.cdl{
-		padding-top: 10px;
-	}
+    background: url("<%= @place.main_image.url %>") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+  }
+  .cdl{
+    padding-top: 10px;
+    text-align: center;
+  }
+  .title-name{
+    color: #e7a614;
+  }
+  .taste-notes{
+    font-family: "coolveticarg";
+    font-weight: 300 !important;
+  }
+  .taste-notes h1{
+    font-family: "coolveticarg";
+    text-align:center; 
+    font-size: 3.5rem;   
+    color:#e7a614;
+  } 
+  .taste-notes-desc{
+    font-family: "corbel";
+    text-align:center;  
+    margin-bottom: 0px;  
+    color:#000;
+  } 
+  p.taste-notes-desc{
+    font-size: 17px !important;
+  }
+  .process-desc{
+    font-family: "corbel" !important; 
+    padding:2.5%;
+    margin-bottom: 0px;  
+  } 
+
+  .hardvest{
+    font-family: "corbel" !important; 
+    padding:2.5%;
+    margin-bottom: 0px;  
+  } 
+
+  .place-desc{
+    font-family: "corbel" !important; 
+
+  } 
+  .general-desc{
+    font-family: "corbel" !important; 
+
+  } 
+  .place-icon{
+    width: 24%;
+    text-align:center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cocoa-bg{
+    background-image: url(<%= asset_path 'site/bg-cacao-g.png'%>)
+  }
+  #bg-content-flavor{
+    background-color: #fff;
+    background-image: url(<%= asset_path 'site/mapa_bg.png' %>)
+
+  
+
+  }
+
 </style>

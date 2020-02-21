@@ -1,0 +1,22 @@
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<div data-aos="fade-up">
+<h5><b><%= t("dashboard.index.partials.news.title") %></b></h5>
+ <div class="multiple-items">
+  <% @blogs.each do |blog| %>
+   	<div>
+      <%= link_to "/blog/#{blog.slug}" do %>
+      <img src="<%= blog.presentation.url %>" alt="<%= blog.title %>" class="img-fluid">
+      <b><%= blog.title %></b>
+      <% end %>
+    </div>
+  <% end %>
+ </div>
+<script>
+	$('.multiple-items').slick({
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 3
+  });
+</script>
+</div>

@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "coolveticarg";
+  src: font-url('coolveticarg.woff'), font-url('coolveticarg.eot'), font-url('coolveticarg.otf'), font-url('coolveticarg.svg'), font-url('coolveticarg.ttf'), font-url('coolveticarg.woff2');
+}
+@font-face {
+  font-family: "corbel";
+  src: font-url('corbel.woff'), font-url('corbel.eot'), font-url('corbel.otf'), font-url('corbel.svg'), font-url('corbel.ttf'), font-url('corbel.woff2');
+}
+
 header.headin{
 	background:#fff;
 	width:100%;
@@ -57,7 +66,9 @@ nav.navi{
 	padding:12% 0
 }
 .menu-nav{
-	padding:0 10px
+	padding:0 10px;
+	font-family: "corbel"
+
 }
 .menu-nav ul{
 	list-style:none;
@@ -114,21 +125,23 @@ body{
 
 h2.more-products-title {
 	font-size: 1.5rem;
-  font-weight: bold;
   width: 100%;
-  text-transform: uppercase;
-  color: #45292B;
+  /*text-transform: uppercase;*/
+  color: #e7a614;
+  font-family: "coolveticarg";
 	text-align: center;
   /*border-bottom: 2px solid $light-purple;*/
 }
 
 .gray-container h4 {
-  color: #a5ce3a;
+  color: #472a2b;
   margin-bottom: 0;
+  font-family: "coolveticarg";
 }
 .gray-container span {
   color: black;
   margin-bottom: 0.5rem;
+  font-family: "corbel";
 }
 
 .truncate {
@@ -165,4 +178,53 @@ h2.more-products-title {
   width: auto;
 	height: 2px;
 	border-bottom: 1px solid #666;
+}
+a.lnk-featured-promo:hover, a.lnk-featured-promo:active, a.lnk-featured-promo:focus{
+  color: #a5ce3a;
+  text-decoration: none !important;
+} 
+
+a.lnk-featured-promo img{
+  transition: transform .5s ease;
+}
+
+a.lnk-featured-promo img:hover{
+  transform: scale(1.10);
+}
+
+.pulse-checking{
+  animation: pulse 2s infinite;
+  background-color: rgba(72,100,159,0.4);
+  border-radius: 50%;
+  height: 30px;
+  left: 17px;
+  position: absolute;
+  top: 12px;
+  width: 30px;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(2,30,88, 0.4);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(2,30,88, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(2,30,88, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(2,30,88, 0.4);
+    box-shadow: 0 0 0 0 rgba(2,30,88, 0.4);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(2,30,88, 0);
+      box-shadow: 0 0 0 10px rgba(2,30,88, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(2,30,88, 0);
+      box-shadow: 0 0 0 0 rgba(2,30,88, 0);
+  }
 }

@@ -1,0 +1,36 @@
+<div class="news"><br><br>
+  <div class="container">
+    <div class="row">
+    	<div class="col-md-9">
+    		<div class="title">
+    			<h2><b><%= @blog.title %></b></h2>
+    		</div>
+        <div class="info">
+          <%= @blog.created_at.strftime('%B %d, %Y')%> por <%= @blog.autor %>
+        </div>
+        <hr>
+        <div class="body">
+          <%= @blog.body.html_safe %>
+        </div>
+    	</div>
+    	<div class="col-md-3">
+    		<% @blogs.each do |blog| %>
+          <%= link_to "/blog/#{blog.slug}" do %>
+            <img src="<%= blog.presentation.url %>" alt="" class="img-fluid">
+            <b><%= blog.title %></b>
+          <% end %>
+          <hr>
+    		<% end %>
+    	</div>
+    </div>
+  </div>
+</div>
+<style>
+  .news{
+    background-color: #fff;
+  }
+  .info{
+    font-style: italic;
+    padding-bottom: 10px;
+  }
+</style>

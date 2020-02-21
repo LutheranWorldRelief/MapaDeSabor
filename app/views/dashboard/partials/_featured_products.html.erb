@@ -1,0 +1,86 @@
+
+<div data-aos="fade-up">
+
+<br>
+
+<h4 style="color:#E7A614; font-family: 'coolveticarg'"><%= t("dashboard.index.partials.featured_products.title") %></h4>
+<!--div class="row" style="display: block;height: 100% !important;overflow: hidden;">
+	<div class="col-md-12">
+	<% @featured_products.each do |fp| %>
+	<div class="product-featured-container col-xs-2 col-sm-2 col-md-2 col-lg-2" style="display: inline-block">
+    <div class="product-featured-container" style="width: 150px;display: inline-block;">
+		  <img src="<%= fp.featured %>" alt="" class="img-fluid mx-auto d-block" title="<%= fp.name %>" style="display: block !important; width:65%">
+      <h6 style="width: 150px;text-align: center;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><b><%= fp.name %></b></h6>
+    </div>
+
+	<% end %>
+	</div>
+</div-->
+<%= stylesheet_link_tag "lightslider" %>
+<%= javascript_include_tag "lightslider.min" %>
+<script>
+  $(function() {
+    var slider;
+    return slider = $('#lightSlider').lightSlider({
+      item: 3,
+      autoWidth: false,
+      slideMove: 2,
+      slideMargin: 20,
+      mode: 'slide',
+      useCSS: true,
+      cssEasing: 'ease',
+      easing: 'linear',
+      speed: 400,
+      slideEndAnimation: true,
+      pause: 2000,
+      keyPress: false,
+      controls: true,
+      prevHtml: '',
+      nextHtml: '',
+      currentPagerPosition: 'middle',
+      enableTouch: true,
+      freeMove: true,
+      auto:true,
+      loop: true,
+      responsive: [
+        {
+          breakpoint: 800,
+          settings: {
+            item: 2,
+            slideMove: 1
+          }
+        }, {
+          breakpoint: 480,
+          settings: {
+            item: 2,
+            slideMove: 1
+          }
+        }
+      ]
+    });
+  });
+</script>
+<div class="row displays-movil">
+  <div class="col-md-12 cdl">
+    <div class="gray-container">
+      <h2 class="more-products-title">
+        <%#= t('dashboard.show.more_products') %>
+      </h2>
+      <br>
+      <ul id="lightSlider">
+        <% @featured_products.each_with_index do |fp| %>
+          <li>
+            <a href="/dashboard/<%= fp.slug %>" class="lnk-featured-promo">
+              <h4 class="truncate" style="width: 150px;font-size: 20px;margin: 0 auto;text-align: center;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                <%= fp.name %>
+              </h4>
+              <span class="truncate"></span>
+              <img src="<%= fp.featured %>" class="mx-auto d-block" style="display: block !important; width:40%"/>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>

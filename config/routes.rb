@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :profile, only: [:edit, :update]
     resources :users
     resources :contacts, only: [:index, :show]
+    resources :blogs
   end
   root to: "dashboard#new_index"
 
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
   get 'about_us', to: 'dashboard#about_us'
   get 'search', to: 'dashboard#search'
   get 'search_content', to: 'dashboard#search_content'
+  get 'blog/:id', to: 'dashboard#blog'
 
   resources :contacts, only: [:new, :create]
 

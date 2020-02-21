@@ -1,19 +1,20 @@
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<h5><b><%= t("dashboard.index.partials.chart.title") %></b></h5>
-<%= image_tag "/uni.png", width: "150px", class: "img-fluid" %>
+<div data-aos="fade-up">
+<h4 style="color:#E7A614; font-family: 'coolveticarg'"><%= t("dashboard.index.partials.chart.title") %></h4>
+<!--<%= image_tag "/uni.png", width: "150px", class: "img-fluid" %>-->
+<br>
 <div style="position: relative;">
-  <div style="left: 45%; right: 45%; top: -10%; width: 100%; position: relative;">FRUITY-BROWNED</div>
-  <div style="top: 45%; bottom: 45%; left: 0; position: absolute;">COCOA</div>
+  <div style="font-family:'corbel';left: 45%; right: 45%; top: -10%; width: 100%; position: relative;font-weight: bold;">FRUITY-BROWNED</div>
+  <div style="font-family:'corbel'; top: 45%; bottom: 45%; left: 0; position: absolute;font-weight: bold;">COCOA</div>
   <div style="width: 80%; margin: 0 auto;">
   <div id="container" style=""></div>
   </div>
-  <div style="top: 45%; bottom: 45%; right: 0; position: absolute;">ACIDITY</div>
-  <div style="left: 50%; right: 45%; bottom: -10%; position: relative;">SPICY</div>
+  <div style="font-family:'corbel'; top: 45%; bottom: 45%; right: 0; position: absolute;font-weight: bold;">ACIDITY</div>
+  <div style="font-family:'corbel'; left: 50%; right: 45%; bottom: -10%; position: relative;font-weight: bold;">SPICY</div>
 </div>
 <div class="col-md-6">
-  <p style="font-size: 9px; font-style: italic; color: #808080;">Partial Least Squares regression (PLS, software: LatentiX 2.12, latentix.com) using sensory data as X-matrix and sensory data as Y-matrix. All values were autoscaled. (PC#1 (22.774%); PC#2 (18.896%). Petersen M. A., Seguine E. S., Papalexandratou Z., Sukha D., De Winne T., Jakobsen R. R., Nielsen D. S., 2017.</p>
+  <br>
+  <p style="font-size: 9px; font-style: italic; color: #808080;padding: 0 8%">Partial Least Squares regression (PLS, software: LatentiX 2.12, latentix.com) using sensory data as X-matrix and sensory data as Y-matrix. All values were autoscaled. (PC#1 (22.774%); PC#2 (18.896%). Petersen M. A., Seguine E. S., Papalexandratou Z., Sukha D., De Winne T., Jakobsen R. R., Nielsen D. S., 2017. Con el apoyo de la Universidad de Copenahue</p>
+  <br>
 </div>
 <style>
   body{
@@ -116,7 +117,10 @@
       showInLegend: false,
       name: 'Productos',
       type: 'scatter',
-      data: <%= "#{@points.to_json}".html_safe %>
+      data: <%= "#{@points.to_json}".html_safe %>,
+      marker: {
+        radius: 8
+      },
 
     }],
     tooltip: {
@@ -148,3 +152,4 @@
     opacity: 0.4;
   }
 </style>
+</div>

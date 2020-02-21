@@ -51,24 +51,25 @@
     });
   });
 </script>
-<div class="row">
-  <div class="container">
-    <%= link_to "<i class='fas fa-arrow-left'></i> #{t('dashboard.show.btn_back')}".html_safe, root_path(locale: I18n.locale), class: "btn btn-secondary float-right" %>
-    <%= link_to "<i class='fas fa-file'></i> #{t('dashboard.show.btn_pdf')}".html_safe, dashboard_path(@place, format: :pdf), class: "btn btn-success", target: "_blank" %>
-    <br><br>
-  </div>
-</div>
 <% if I18n.locale.to_s == "es" %>
   <%= render partial: "dashboard/partials/info_spanish" %>
 <%else%>
   <%= render partial: "dashboard/partials/info_english" %>
 <%end%>
+<div class="row">
+  <div class="container-fluid">
+    <%= link_to "<i class='fas fa-arrow-left'></i> #{t('dashboard.show.btn_back')}".html_safe, root_path(locale: I18n.locale), class: "btn btn-secondary float-right" %>
+    <%= link_to "<i class='fas fa-file'></i> #{t('dashboard.show.btn_pdf')}".html_safe, dashboard_path(@place, format: :pdf), class: "btn btn-success", target: "_blank" %>
+    <br><br>
+  </div>
+</div>
 <div class="row displays-movil">
   <div class="col-md-12 cdl">
     <div class="gray-container">
       <h2 class="more-products-title">
         <%= t('dashboard.show.more_products') %>
       </h2>
+      <br>
       <ul id="lightSlider">
         <% @places.each_with_index do |place| %>
           <li>

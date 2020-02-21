@@ -35,27 +35,40 @@
     = f.input :youtube_url
 .row
   .medium-6.columns
+    = f.label :graphic_one do
+      = "Gráfico uno / Graphic One"
+      = image_tag f.object.graphic_one.url, class: 'img-responsive img-thumbnail' rescue nil
+    = f.file_field :graphic_one, hide_label: true, accept: 'image/*'
+  .medium-6.columns
+    = f.label :graphic_two do
+      = "Gráfico dos / Graphic Two"
+      = image_tag f.object.graphic_two.url, class: 'img-responsive img-thumbnail' rescue nil
+    = f.file_field :graphic_two, hide_label: true, accept: 'image/*'
+.row
+  .medium-6.columns
     = f.input :scheme, as: :ckeditor, label: "Descripción del sabor y gráfico", input_html: { ckeditor: { toolbar: 'Full' } }
   .medium-6.columns
     = f.input :scheme_eng, as: :ckeditor, label: "Descripción del sabor y gráfico (Ingles)", input_html: { ckeditor: { toolbar: 'Full' } }
 
 %h5 Notas de sabor/ Flavor Notes
 .row
-  .medium-3.columns
+  .medium-2.columns
     = f.input :bean_size, label: "Bean Size / Tamaño del frijol"
-  .medium-3.columns
+  .medium-2.columns
     = f.input :well_fermented, label: "Well fermented / Bien fermentado"
-  .medium-3.columns
+  .medium-2.columns
     = f.input :semi_fermented, label: "Semi fermented / Semi fermentado"
-  .medium-3.columns
+  .medium-2.columns
     = f.input :defects, label: "Defects / Defectos"
-.row
   .medium-4.columns
     = f.input :toast_conditions, label: "Toast Conditions / Condiciones de tostado"
+.row
   .medium-4.columns
-    = f.input :licor, label: "Liquor / Licor"
+    = f.input :licor, label: "Licor (español)"
+    = f.input :liquor_eng, label: "Liquor (inglés)"
   .medium-4.columns
-    = f.input :chocolate
+    = f.input :chocolate, label: "Chocolate (español)"
+    = f.input :chocolate_eng, label: "Chocolate (inglés)"
 %br
 %hr
 .row

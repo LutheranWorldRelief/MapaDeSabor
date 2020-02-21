@@ -4,14 +4,15 @@
       <div class="col-3 h-s1" >
         <div class="h-log">
           <a href="/" style="text-decoration: none; color: #333">
-            <img src="<%= asset_path('/image-5.png')%>" alt="LWR" width="25px" height="25px"> <span class="title-hidden"><%= t('layout.partials.header.title') %></span>
+            <img src="<%= asset_path('/accordion-product.png')%>" alt="LWR" width="25px" height="25px"> <span class="title-hidden" style="letter-spacing: -1px;font-size: 16px"><%= t('layout.partials.header.title') %></span>
           </a>
         </div>
       </div>
       <div class="col-9 h-s2">
         <div class="menu-li">
           <%if request.path == root_path%>
-          <a href="javascript:void(0)" id="ac-menu" title="Filtros"><i class="fas fa-angle-left fa-2x" style=""></i></a>
+          <a href="javascript:void(0)" id="ac-menu" title="Filtros" style="position: absolute;z-index:999"><i class="fas fa-angle-left fa-2x" style=""></i></a>
+          <div class="pulse-checking"></div>
           <%end%>
         </div>
         <!--
@@ -20,27 +21,31 @@
             <input type="text" class="searchin-control" placeholder="search...">
           </form>
         </div> -->
-        <div class="float-right">
-          <div class="h-mini">
-            <ul>
-              <li><a href="/"><%= t('layout.partials.header.links.home') %></a></li>
-              <li><a href="/about_us"><%= t('layout.partials.header.links.about_us') %></a></li>
-              <li><a href="/contacts/new"><%= t('layout.partials.header.links.contact') %></a></li>
-              <li>
-                <div class="btn-group dropleft">
-                  <a class="dropdown-toggle" href="#" role="button" id="language_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%= t(I18n.locale) %>
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="language_menu">
-                    <% I18n.available_locales.each do |lang| %>
-                      <%= link_to t(lang), "#{request.path}?locale=#{lang.to_s}", method: :get , class: "dropdown-item link_lang" %>
-                    <% end %>
+          <div class="float-right p-menu" style="font-family: 'corbel'">
+            <div class="h-mini">
+              <ul>
+                <% if user_signed_in? %>
+                  <li><a href="/panel">Dashboard</a></li>
+                <% end %>
+                <li><a href="/"><%= t('layout.partials.header.links.home') %></a></li>
+                <li><a href="/about_us"><%= t('layout.partials.header.links.about_us') %></a></li>
+                <li><a href="/contacts/new"><%= t('layout.partials.header.links.contact') %></a></li>
+                <li>
+                  <div class="btn-group dropleft">
+                    <a class="dropdown-toggle" href="#" role="button" id="language_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <%= t(I18n.locale) %>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="language_menu">
+                      <% I18n.available_locales.each do |lang| %>
+                        <%= link_to t(lang), "#{request.path}?locale=#{lang.to_s}", method: :get , class: "dropdown-item link_lang" %>
+                      <% end %>
+                    </div>
                   </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -71,6 +76,10 @@
   #ac-menu i{
     transform: rotateZ(0deg);
     transition: 0.4s all ease;
+  }
+  .p-menu{
+    font-size: 16px;
+
   }
   @media (max-width: 768px){
     #ac-menu i{

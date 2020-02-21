@@ -31,6 +31,10 @@ es:
           metric_tons: "Tonelada Métrica"
         chart:
           title: "Guía del Sabor"
+        featured_products: 
+          title: "Cacaos premiados"
+        news: 
+          title: "Noticias"
     about_us:
       title_1: "Mapa regional de sabores de cacao"
       title_2: "Objetivo"

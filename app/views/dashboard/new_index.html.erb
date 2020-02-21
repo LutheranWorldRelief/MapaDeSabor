@@ -1,5 +1,13 @@
 <div id="index_places">
-	<%= render partial: "dashboard/partials/map", :locals => {price: @price, pc: @pc, pcp: @pcp} %>
-<hr>
-	<%= render partial: "dashboard/partials/chart_new" %>
+	<%= render partial: "dashboard/partials/map", :locals => {places: @places, price: @price, pc: @pc, pcp: @pcp} %>
+	<div class="container">
+  <hr>
+  	<%= render partial: "dashboard/partials/featured_products" %>
+  <hr>
+  <br>
+  	<%= render partial: "dashboard/partials/chart_new" %>
+  <hr>
+  <br>
+  	<%#= render partial: "dashboard/partials/news" %>
+	</div>
 </div>

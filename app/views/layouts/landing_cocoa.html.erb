@@ -14,11 +14,19 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <title>Mapa de Sabores de Cacao</title>
+    <style type="text/css">
+      #index_places{
+        background-color: #fff;
+      }
+    </style>
   </head>
-  <body>
+  <body style="left: -50%">
     <!-- Header -->
     <%= render partial: "layouts/partials/header"%>
+    
     <%if request.path == root_path%>
     <!-- Navbar -->
       <%= render partial: "layouts/partials/navbar"%>
@@ -34,17 +42,25 @@
     <!-- Section -->
     <section class="body">
       <% if request.path == root_path %>
-      <div class="container">
+            <%= yield %>
+     <!--  <div class="container">
         <div class="row">
           <div class="card card-body">
-            <%= yield %>
           </div>
-        </div>
-      </div>
+        </div> 
+      </div> -->
       <% else %>
         <%= yield %>
       <% end %>
     <%= render partial: "layouts/partials/footer"%>
+
+    <%if request.path == root_path%>
+    
+      <script type="text/javascript">
+          AOS.init();
+      </script>
+      
+    <% end %>
     </section>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

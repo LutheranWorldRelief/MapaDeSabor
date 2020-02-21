@@ -33,10 +33,12 @@
 #  harvest_eng             :text
 #  content_left_eng        :text
 #  scheme_eng              :text
+#  featured                :string
 #
 
 class Place < ApplicationRecord
-
+  mount_uploader :featured, ImageUploader
+  
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders]
 
@@ -48,6 +50,12 @@ class Place < ApplicationRecord
   validates :name, presence: true
 
   has_attached_file :main_image, styles: { original: '960>', slider: '300x200!' }
+  validates_attachment_content_type :main_image, content_type: /\Aimage/
+
+  has_attached_file :graphic_one, styles: { original: '960>', slider: '300x200!' }
+  validates_attachment_content_type :main_image, content_type: /\Aimage/
+
+  has_attached_file :graphic_two, styles: { original: '960>', slider: '300x200!' }
   validates_attachment_content_type :main_image, content_type: /\Aimage/
 
   validates :youtube_url,

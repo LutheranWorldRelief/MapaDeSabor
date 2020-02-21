@@ -31,6 +31,10 @@ en:
           metric_tons: "Metric tons"
         chart:
           title: "Cocoa Flavor Guide"
+        featured_products: 
+          title: "Award-winning Cocoa"
+        news: 
+          title: "News"
     about_us:
       title_1: "Regional map of cocoa flavors"
       title_2: "Objective"
@@ -38,11 +42,18 @@ en:
     show:
       btn_back: "Back"
       btn_pdf: "Exporting PDF"
-      title_1: "Quality - Taste notes"
+      title_1: "Quality - Taste Notes"
       title_2: "Processing"
       title_3: "Harvest"
       title_4: "Generals"
       more_products: "More products"
+      bean_size: "Bean Size"
+      well_fermented: "Well-fermented Beans"
+      semi_fermented: "Semi-fermented Beans"
+      defects: "Defects"
+      roasting: "Roasting Conditions"
+      chocolate: "Chocolate"
+      licor: "Licor"
     contact:
       title: "Contact us"
       desc: "You can contact us by writing to info@cacaomovil.com or using our contact form."

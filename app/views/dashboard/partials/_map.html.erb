@@ -1,22 +1,19 @@
-<div class="row">
-  <div class="col-sm-6">
-    <h5><b><%= t("dashboard.index.partials.map.title") %></b></h5>
-  </div>
-  <div class="col-sm-6">
-    <div class="float-right">
-      <p><%= t("dashboard.index.partials.map.price_cocoa") %>: $<%= @price %><br><span style="color: #0EA600;"><%= "#{@pc} (#{@pcp})" %></span><br><span style="font-size: 10px;"> <%= t("dashboard.index.partials.map.values_in") %> <b>USD</b>. 1 <%= t("dashboard.index.partials.map.metric_tons") %></span><br></p>
-    </div>
-  </div>
-</div>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+<script src="https://unpkg.com/mapbox-gl-leaflet/leaflet-mapbox-gl.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-  integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+  
   <div class="row">
     <div class="col-12">
       <div id="mapid"></div>
     </div>
+    <div class="col-6 offset-6">
+      <!--div class="float-right price-cacao" style="line-height: 95%;margin-top: 3%;padding-right: 2%">
+        <p><%= t("dashboard.index.partials.map.price_cocoa") %>: <span style="font-weight:bold">$<%= @price %></span><br><span style="color: #0EA600;font-size: 14px"><%= "#{@pc} (#{@pcp})" %></span><br><span style="font-size: 10px;"> <%= t("dashboard.index.partials.map.values_in") %> <b>USD</b>. 1 <%= t("dashboard.index.partials.map.metric_tons") %></span><br></p>
+      </div>
+    </div-->
   </div>
 
   <style>
@@ -27,31 +24,63 @@
     .leaflet-popup-content p{
       margin: 0;
     }
+    .price-cacao {
+      width: 17%;
+      position: fixed;
+      z-index: 999999999;
+      top: 14px;
+      right: 10px;
+      background: #eee;
+      overflow-x: hidden;
+      padding: 0.5% 0%;
+      padding-left: 1%;
+      background-color: #fff;
+      border-radius: 5%;
+
+    }
   </style>
   <script>
-  	var mymap = L.map('mapid').setView([13.701288, -89.224453], 5);
+    function getColor(d) {
+    return d > 1000 ? '#89FFA6' :
+           d > 500  ? '#E6FCFF' :
+           d > 200  ? '#F3EEEA' :
+                      '#FFEDA0';
+    }
 
-  	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
+    
+
+    var map = L.map('mapid').setView([13.701288, -89.224453], 6);
+    token = 'pk.eyJ1Ijoid2lsbGlhbXNjb2RlY2FzdGxlIiwiYSI6ImNrMzBna2lxMDAwZXUzZ3BpNDdnbTQ1YjAifQ.KpPp25_1XiOMbULSHp5Jhw';
+    var gl = L.mapboxGL({
+      accessToken: token,
+      style: 'mapbox://styles/mapbox/streets-v11'
+    }).addTo(map);
 
     var greenIcon = L.icon({
-        iconUrl: '/marker-icon.png',
-  			iconSize: [25, 41],
+        iconUrl: '/ball_1.png',
+        //iconUrl: '/marker_ball.png',
+  			iconSize: [45, 45],
         iconAnchor: [0, 41],
 
     });
-
   	<% if @places.size > 0 %>
   		<% @places.each do |place| %>
         <% if place.latitude.present? && place.longitude.present? %>
-  		    marker= L.marker([<%= place.latitude %>, <%= place.longitude %>],{icon: greenIcon, riseOnHover: true, permanent: true}).bindPopup('<img src="/CACAO_01.png" alt="" class="img-fluid" width="25px">&nbsp;<b><%= link_to place.name, dashboard_path(place) %></b><p><%= place.description.truncate(50) %></p>').addTo(mymap);
+  		    //marker= L.marker([<%= place.latitude %>, <%= place.longitude %>],{icon: greenIcon, riseOnHover: true, permanent: true}).bindPopup('<img src="/CACAO_01.png" alt="" class="img-fluid" width="25px">&nbsp;<b><%= link_to place.name, dashboard_path(place) %></b><p><%= place.description.truncate(50) %></p>').addTo(map);
+          marker= L.marker([<%= place.latitude %>, <%= place.longitude %>],{icon: greenIcon, riseOnHover: true, permanent: true}).bindTooltip('<center><img src="/CACAO_01.png" alt="" class="img-fluid" width="25px"><br><%= link_to place.name, dashboard_path(place) %><br><p><%= place.description.truncate(50) %></p></center>').addTo(map).on("click",function(){
+              window.location.href = "<%= dashboard_path(place) %>"
+          });
+          //marker = L.marker([<%= place.latitude %>, <%= place.longitude %>],{<%= link_to place.name%>}).addTo(map);
         <% end %>
       <% end %>
     <% end %>
-    mymap.scrollWheelZoom.disable();
-
+    map.scrollWheelZoom.disable();
     $(document).ready(function(){
       if($(".price-scrap").next("p").text() == ""){
         $(".price-scrap").next("p").remove();
       }
     });
   </script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>

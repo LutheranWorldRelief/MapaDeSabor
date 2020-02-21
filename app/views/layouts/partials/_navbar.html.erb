@@ -1,9 +1,27 @@
 <link rel="stylesheet" href="https://www.jqueryscript.net/demo/Bootstrap-4-Chosen-Plugin/dist/css/component-chosen.css">
-<nav class="navi" id="menu-active" data-status="false">
+<nav class="navi" id="menu-active" data-status="false" style="left: -50%">
   <div class="pad-menu"></div>
-  <div class="menu-nav" style="overflow-y: scroll; height: 93%;">
+  <div class="menu-nav" style="overflow-y: scroll; height: 93%;" id="g-scroll" >
     <br>
     <ul>
+      <% if user_signed_in? %>
+      <!--li><a href="/panel">Dashboard</a></li-->
+      <% end %>
+      <!--li><a href="/"><%= t('layout.partials.header.links.home') %></a></li>
+      <li><a href="/about_us"><%= t('layout.partials.header.links.about_us') %></a></li>
+      <li><a href="/contacts/new"><%= t('layout.partials.header.links.contact') %></a></li>
+      <li>
+        <div class="btn-group dropleft">
+          <a class="dropdown-toggle" href="#" role="button" id="language_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= t(I18n.locale) %>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="language_menu">
+            <% I18n.available_locales.each do |lang| %>
+              <%= link_to t(lang), "#{request.path}?locale=#{lang.to_s}", method: :get , class: "dropdown-item link_lang" %>
+            <% end %>
+          </div>
+        </div>
+      </li-->
       <li style="margin-left: -20px; margin-right: -10px; padding: 10px 20px; background: #00cad6; font-weight: bold; ">
         <span style="color: #fff"><%= t("layout.partials.navbar.item_1.title") %></span>
       </li>
@@ -13,7 +31,7 @@
             <%= simple_form_for :place, url: search_dashboard_index_path, method: :get, remote: true do |f| %>
             <%= f.input :search, label: false, input_html: { class: "form-control", autocomplete: "off" } %>
             <% end %>
-            <div id="places" style="height: 250px; overflow-y: scroll; margin-top: 5px;">
+            <div id="places" style="height: 93%; overflow-y: scroll; margin-top: 5px;" class="product-bar">
               <%= render partial: "dashboard/partials/places" %>
             </div>
           </div>
@@ -126,12 +144,12 @@
     }
   })
   $(document).ready(function(){
-    if($("html").width() < 768 == true ){
+    /*if($("html").width() < 768 == true ){*/
       $("#menu-active").data("status", true)
       $("#menu-active").css("left", "-50%")
       $("section.body").css("width", "100%")
       $("section.body").css("left", "0")
-    }
+    /*}*/
   })
 
   $("#place_search").keyup(function(){
@@ -154,9 +172,9 @@
     font-size: 14px !important;
   }
   .farmer-hat {
-  	background:url(<%= asset_url 'site/hat.png' %>);
-  	width: 23px;
-  	height: 15px;
+    background:url(<%= asset_url 'site/hat.png' %>);
+    width: 23px;
+    height: 15px;
   }
 
   .seed {
@@ -171,5 +189,43 @@
   .checkbox_fil {
     font-size: 14px;
     margin-left: 0;
+  }
+
+  #g-scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #fff;
+  }
+
+  #g-scroll::-webkit-scrollbar
+  {
+    width: 6px;
+    background-color: #fff;
+  }
+
+  #g-scroll::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #cad2d3;
+  }
+
+  .product-bar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #fff;
+  }
+
+  .product-bar::-webkit-scrollbar
+  {
+    width: 6px;
+    background-color: #fff;
+  }
+
+  .product-bar::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #cad2d3;
   }
 </style>

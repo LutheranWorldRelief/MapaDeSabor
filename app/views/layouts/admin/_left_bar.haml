@@ -157,3 +157,13 @@
                 %ul
                   %li
                     = link_to "Mensajes recibidos", panel_contacts_url()
+
+              %li
+                %a.tooltip-tip{:href => "#", :title => "Noticias"}
+                  %i.intial.palette-Green-200.ti-time.bg
+                  %span Noticias
+                %ul
+                  %li
+                    = link_to "Listado", panel_blogs_url()
+                  %li
+                    = link_to "Ingresar noticia", new_panel_blog_url()
