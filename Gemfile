@@ -28,7 +28,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
-
 # Easy file attachment management for ActiveRecord
 gem "paperclip", "~> 5.0.0"
 
@@ -107,3 +106,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary', '~> 0.12.3'
+gem 'carrierwave', '~> 2.0', '>= 2.0.2'
