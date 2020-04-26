@@ -48,7 +48,7 @@
         <li><a data-toggle="collapse" href="#flavors_filter" role="button" aria-expanded="false" aria-controls="flavors_filter" class="checking" data-id="2" style="color: #BDB55F"><i class="fas fa-flask"></i> <%= t("layout.partials.navbar.item_2.section_1") %> <i class="fas fa-angle-right float-right" style="line-height: 31px; font-size: 19px; transition: all 0.4s ease; transform: rotateZ(0deg);"></i></a>
           <div class="collapse" id="flavors_filter">
             <div>
-              <%= f.input :flavor, collection: @flavors.map { |e| [e.name, e.id] }, as: :check_boxes , label: false %>
+              <%= f.input :flavor, collection: @flavors.map { |e| ["#{e.name}-#{e.id}", e.id] }, as: :check_boxes , label: false %>
             </div>
           </div>
         </li>

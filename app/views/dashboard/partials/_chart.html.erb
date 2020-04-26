@@ -1,73 +1,155 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-<h5><b>Gu&iacute;a del sabor</b></h5>
+<div data-aos="fade-up">
+<h4 style="color:#E7A614; font-family: 'coolveticarg'"><%= t("dashboard.index.partials.chart.title") %></h4>
+<!--<%= image_tag "/uni.png", width: "150px", class: "img-fluid" %>-->
+<br>
 <div style="position: relative;">
-  <div style="font-family:'corbel'; left: 45%; right: 45%; top: -10%; width: 100%; position: relative;font-weight: bold;">FRUITY-BROWNED</div>
+  <div style="font-family:'corbel';left: 45%; right: 45%; top: -10%; width: 100%; position: relative;font-weight: bold;">FRUITY-BROWNED</div>
   <div style="font-family:'corbel'; top: 45%; bottom: 45%; left: 0; position: absolute;font-weight: bold;">COCOA</div>
-  <div style="font-family:'corbel'; width: 80%; margin: 0 auto;">
-    <canvas id="myChart"></canvas>
+  <div style="width: 80%; margin: 0 auto;">
+  <div id="container" style=""></div>
   </div>
   <div style="font-family:'corbel'; top: 45%; bottom: 45%; right: 0; position: absolute;font-weight: bold;">ACIDITY</div>
-  <div style="font-family:'corbel'; left: 45%; right: 45%; bottom: -10%; position: relative;font-weight: bold;">SPICY</div>
+  <div style="font-family:'corbel'; left: 50%; right: 45%; bottom: -10%; position: relative;font-weight: bold;">SPICY</div>
 </div>
-<script>
-
-	var zones        = [{ x: 14, y: 15}, { x: 1, y: 17}, { x: -5, y: -10}] //Circulos (Zonas) predefinidas
-  var zone_colors  = ['#fff1dd', '#fff1dd', '#fff1dd']
-  var zone_sizes   = [85, 85, 85] //Tamaño de los circulos
-  var data         = zones.concat(<%= "#{@points.to_json}".html_safe %>)
-  var data_colors  = zone_colors.concat(<%= "#{@point_colors.to_json}".html_safe %>)
-  var data_sizes   = zone_sizes.concat(<%= Array.new(@points.size, 9) %>)
-
-  var ctx = document.getElementById("myChart");
-  var scatterChart = new Chart(ctx, {
-    type: 'scatter',
-    data: {
-      labels: <%= "#{@point_labels}".html_safe %>,
-      datasets: [{
-          label: '',
-          borderColor: data_colors,
-          backgroundColor: data_colors,
-          data: data,
-          pointBackgroundColor: data_colors,
-          pointRadius: data_sizes,
-          pointHoverRadius: data_sizes,
-
-      }]
-    },
-    options: {
-       legend: false,
-       tooltips: {
-       callbacks: {
-          label: function(tooltipItem, data) {
-             var label = data.labels[tooltipItem.index];
-             return label;
-          }
-        }
-      },
-       scales: {
-          xAxes: [{
-            ticks: {
-              display: true,
-              suggestedMin: -30,
-              suggestedMax: 30,
-              stepSize: 5
-            },
-          }],
-          yAxes: [{
-            ticks: {
-              display: true,
-              suggestedMin: -30,
-              suggestedMax: 30,
-              stepSize: 5
-            },
-          }]
-       }
-    }
-  })
-</script>
+<div class="col-md-6">
+  <br>
+  <p style="font-size: 9px; font-style: italic; color: #808080;padding: 0 8%">Partial Least Squares regression (PLS, software: LatentiX 2.12, latentix.com) using sensory data as X-matrix and sensory data as Y-matrix. All values were autoscaled. (PC#1 (22.774%); PC#2 (18.896%). Petersen M. A., Seguine E. S., Papalexandratou Z., Sukha D., De Winne T., Jakobsen R. R., Nielsen D. S., 2017. Con el apoyo de la Universidad de Copenahue</p>
+  <br>
+</div>
 <style>
   body{
     overflow-x: hidden;
   }
 </style>
+<script>
+<% if @flavors.size > 0 %>
+   chart = Highcharts.chart('container', {
+    title: {
+      text: ''
+    },
+    subtitle: {
+      text: ''
+    },
+    xAxis: {
+      title: {
+        enabled: false,
+        text: 'Height (cm)'
+      },
+      visible: true,
+      max: 100,
+      min: -100,
+      gridLineColor: '#ffffff',
+      lineColor: '#ffffff',
+      lineWidth: 1,
+      tickColor: '#ffffff',
+      labels: {
+        enabled: false,
+      },
+      plotLines: [{
+        color: '#cccccc',
+        dashStyle: 'dot',
+        width: 2,
+        value: 0,
+        zIndex: 3
+      }]
+    },
+    yAxis: {
+      title: {
+        enabled: false,
+        text: 'Weight (kg)'
+      },
+      visible: true,
+      max: 100,
+      min: -100,
+      gridLineColor: '#ffffff',
+      labels: {
+        enabled: false,
+      },
+      plotLines: [{
+        color: '#cccccc',
+        dashStyle: 'dot',
+        width: 2,
+        value: 0,
+        zIndex: 3
+      }]
+    },
+    plotOptions: {
+      scatter: {
+        marker: {
+          radius: 5,
+          lineWidth: 1,
+          symbol: 'circle'
+        }
+      },
+      bubble: {
+        minSize: 50,
+        maxSize: 200,
+        dataLabels: {
+          enabled: true,
+          format: '{point.name}',
+          color: '{point.color}',
+          className: 'circleText'
+        }
+      }
+    },
+    series: [
+    {
+      showInLegend: false,
+      type: 'bubble',
+      data: [
+        <% @flavors.each do |fl| %>  
+        { x: <%= fl.position_x %>, y: <%= fl.position_y %>, z: <%= fl.position_z %>, name: '<%= fl.name%>', color: '<%= "##{fl.color}" %>'},
+        <% end %>
+      ],
+      enableMouseTracking: false
+    },
+    
+    // {
+    //   name: '<%#= fl.name %>',
+    //   type: '<%#= fl.flavor_type %>',
+    //   data: [<%# fl.flavor_items.order(order: :asc).each do |fi| %>[<%#= fi.position_x %>, <%#= fi.position_y %>],<%# end %>],
+    //   color: Highcharts.Color(Highcharts.getOptions().colors[<%#= fl.color %>]).setOpacity(0.3).get(),
+    //   enableMouseTracking: false
+
+    // },
+    <%# end %>
+    {
+      showInLegend: false,
+      name: 'Productos',
+      type: 'scatter',
+      data: <%= "#{@points.to_json}".html_safe %>,
+      marker: {
+        radius: 8
+      },
+
+    }],
+    tooltip: {
+      useHTML: true,
+      formatter: function() {
+        return '<a href="/dashboard/' + this.point.slug + '"><b>' + this.point.myData + '</b></a>';
+      },
+      style: {
+        pointerEvents: 'auto'
+      }
+    },
+    exporting: {
+      enabled: false
+    }
+  });
+    
+  // chart.renderer.circle(pixelX, pixelY, pixelR).attr({
+  //   fill: '#FCFFC5',
+  //   transform: 'rotate(20,100,100),scale(2,1)',
+  //     'stroke-width': 1
+  // }).add();
+
+<% end %>
+</script>
+<style>
+  .circleText.highcharts-data-label text tspan{
+    font-weight: bold;
+    font-size: 12px;
+    opacity: 0.4;
+  }
+</style>
+</div>

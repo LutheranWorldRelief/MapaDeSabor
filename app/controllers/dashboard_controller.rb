@@ -51,7 +51,7 @@ class DashboardController < ApplicationController
   end
 
   def filter
-    @places = Place.all
+    #@places = Place.all
     @place_links = Place.all
     @producers = Producer.all
     @countries = Country.all
@@ -66,7 +66,6 @@ class DashboardController < ApplicationController
       if params[:filter][:flavor].present?
         
         ids = Flavor.where(id: params[:filter][:flavor]).ids
-        
         if ids.size > 0
           if query_map.blank?
             query_map += " flavor_id IN (?) "
@@ -132,14 +131,20 @@ class DashboardController < ApplicationController
     puts "#{conditions_maps}"
     puts "------------------"
 
-    unless conditions_maps[0].blank?
-      @places = @places.where(conditions_maps)
+    if conditions_maps[0].blank?
+      @placess = Place.all
+    else
+      @placess = Place.where(conditions_maps)
+      #binding.pry
     end
 
-    @places.each do |p|
+    #puts conditions_maps
+    #puts @places.inspect
+    @placess.each do |p|
       if p.x_axis.present? && p.y_axis.present?
         color = (p.fermentation_type.nil? ? '#FFFFFF' : Place::FCOLORS[p.fermentation_type.to_sym] )
         @points << {x: p.x_axis, y: p.y_axis, color: color, myData: "#{p.name}, #{p.country.name}", slug: "#{p.slug}"}
+
       end
     end
 
