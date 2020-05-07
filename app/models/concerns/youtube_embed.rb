@@ -24,16 +24,16 @@ class YoutubeEmbed
 
   def self.youtube_embed_url(youtube_url, width = nil, height = nil)
     vid_id = extract_video_id(youtube_url)
-    %(<iframe src="http://www.youtube.com/embed/#{vid_id}" allowfullscreen></iframe>)
+    %(<iframe src="https://www.youtube.com/embed/#{vid_id}" allowfullscreen></iframe>)
   end
 
   def self.youtube_regular_url(youtube_url)
     vid_id = extract_video_id(youtube_url)
-    "http://www.youtube.com/watch?v=#{ vid_id }"
+    "https://www.youtube.com/watch?v=#{ vid_id }"
   end
 
   def self.youtube_shortened_url(youtube_url)
     vid_id = extract_video_id(youtube_url)
-    "http://youtu.be/#{ vid_id }"
+    "https://youtu.be/#{ vid_id }"
   end
 end
