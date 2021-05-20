@@ -74,7 +74,7 @@ gem 'jquery-ui-rails'
 gem 'city-state', '~> 0.0.13'
 gem 'recaptcha', '~> 4.13', '>= 4.13.1'
 
-gem 'nokogiri', '~> 1.6', '>= 1.6.8'
+gem 'nokogiri', '~> 1.10'
 
 gem 'unicorn', '~> 5.5', '>= 5.5.1'
 
