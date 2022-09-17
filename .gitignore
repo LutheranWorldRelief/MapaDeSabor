@@ -23,5 +23,7 @@
 /public/ckeditor_assets
 /public/sitemap.xml.gz
 /public/system
+/public/assets
 /tmp
 rubocop.yml
+.env*
