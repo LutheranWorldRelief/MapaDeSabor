@@ -16,5 +16,6 @@ Rails.application.config.assets.precompile += %w( leaflet-liveupdate.js )
 Rails.application.config.assets.precompile += %w( lightslider.min.js lightslider.css )
 Rails.application.config.assets.precompile += %w( site/marker-icon.png )
 Rails.application.config.assets.paths << Rails.root.join("app", "assets", "fonts")
+Rails.application.config.assets.precompile += %w[ckeditor/config.js]
 
 Rails.application.config.assets.precompile += %w( landing_layout.js landing_layout.css )
