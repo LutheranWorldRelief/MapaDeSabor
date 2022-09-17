@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.4.0"
+ruby "2.5.3"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
 # Use postgresql as the database for Active Record
@@ -42,14 +42,14 @@ gem 'ransack'
 # Integrate Select2 javascript library with Rails asset pipeline
 gem 'select2-rails'
 
-gem 'font-awesome-sass'
+gem 'font-awesome-sass', '~> 4.4.0'
 
 gem 'jquery-datatables-rails', '~> 3.4.0'
 
 # Complete Ruby geocoding solution.
 gem 'geocoder'
 # Ckeditor integration gem for rails
-gem 'ckeditor', github: 'galetahub/ckeditor'
+gem 'ckeditor', '~> 4.3'
 
 # Integrates Slick carousel, a jQuery plugin, into your Rails app.
 gem 'jquery-slick-rails'
@@ -103,7 +103,7 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# gem 'tzinfo-data' #, platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'wicked_pdf', '~> 1.1'
 gem 'wkhtmltopdf-binary', '~> 0.12.3'
 gem 'carrierwave', '~> 2.0', '>= 2.0.2'
