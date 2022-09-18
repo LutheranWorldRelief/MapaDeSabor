@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise'
 # Easy file attachment management for ActiveRecord
-gem "paperclip", "~> 5.0.0"
+gem "paperclip", "~> 5.2.0"
 
 # Create pretty URL’s and work with human-friendly strings
 gem 'friendly_id', '~> 5.1.0'
