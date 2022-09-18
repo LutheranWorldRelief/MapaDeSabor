@@ -24,6 +24,8 @@
 /public/sitemap.xml.gz
 /public/system
 /public/assets
+/public/uploads
 /tmp
 rubocop.yml
+/.idea
 .env*
