@@ -21,6 +21,7 @@
 #  updated_at              :datetime         not null
 #  x_axis                  :float
 #  y_axis                  :float
+#  y_axis_2                :float
 #  fermentation_type       :integer
 #  slug                    :string
 #  quality_flavors         :text
