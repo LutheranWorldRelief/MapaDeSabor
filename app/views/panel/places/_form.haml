@@ -23,9 +23,11 @@
     = f.input :y_axis_2, :label => "Y axis (Woody, Caramel-Panela)"
 
 .row
-  .medium-12.columns
+  .medium-6.columns
     = f.label :fermentation_type
     = f.select :fermentation_type, Place.fermentation_types.keys.map{ |i| [t(i, scope: 'activerecord.enum.place.fermentation_type'), i] }, include_blank: true, required: true
+  .medium-6.columns
+    = f.input :tag, :label => "Etiquetas"
 
 .row
   .medium-6.columns
