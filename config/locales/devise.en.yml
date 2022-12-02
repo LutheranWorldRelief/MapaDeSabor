@@ -1,6 +1,16 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 en:
+  users:
+    sessions:
+      new:
+        login: Ingresar
+        welcome: Bienvenid@ al panel de control del sistema de Gobierno Abierto de El Salvador. Por favor digite sus datos para ingresar.
+        enter_email: Enter your email
+        enter_password: Enter your password
+        reset_password: Reset your password
+        reset_password_explanation: We'll send you an email with instructions about how to reset your password.
+        send_instructions: Send instructions
   devise:
     confirmations:
       confirmed: "Your email address has been successfully confirmed."
